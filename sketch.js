@@ -14,13 +14,13 @@ const COLORES = [
 const DURACION_MS = 2500;
 
 const opciones = [
-  { etiqueta: "Opción 1", color: COLORES[0], resultado: "link 1" },
-  { etiqueta: "Opción 2", color: COLORES[1], resultado: "link 2" },
-  { etiqueta: "Opción 3", color: COLORES[2], resultado: "link 3" },
-  { etiqueta: "Opción 4", color: COLORES[3], resultado: "link 4" },
-  { etiqueta: "Opción 5", color: COLORES[4], resultado: "link 5" },
-  { etiqueta: "Opción 6", color: COLORES[5], resultado: "link 6" },
-  { etiqueta: "Opción 7", color: COLORES[6], resultado: "link 7" },
+  { etiqueta: "Opción 1", color: COLORES[0], resultado: "link 1", url: "https://www.youtube.com/" },
+  { etiqueta: "Opción 2", color: COLORES[1], resultado: "link 2", url: "index.html" },
+  { etiqueta: "Opción 3", color: COLORES[2], resultado: "link 3", url: "https://example.com/3" },
+  { etiqueta: "Opción 4", color: COLORES[3], resultado: "link 4", url: "https://example.com/4" },
+  { etiqueta: "Opción 5", color: COLORES[4], resultado: "link 5", url: "https://example.com/5" },
+  { etiqueta: "Opción 6", color: COLORES[5], resultado: "link 6", url: "https://example.com/6" },
+  { etiqueta: "Opción 7", color: COLORES[6], resultado: "link 7", url: "https://example.com/7" },
 ];
 
 new p5(function (p) {
@@ -237,6 +237,9 @@ new p5(function (p) {
   p.mousePressed = function () {
 
     if (mostrarPopup) {
+      if (ganador && ganador.url) {
+        window.open(ganador.url, '_blank');
+      }
       mostrarPopup = false;
       ganador = null;
       return;
