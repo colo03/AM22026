@@ -14,13 +14,13 @@ const COLORES = [
 const DURACION_MS = 2500;
 
 const opciones = [
-  { etiqueta: "Opción 1", color: COLORES[0], resultado: "link 1", url: "https://www.youtube.com/" },
-  { etiqueta: "Opción 2", color: COLORES[1], resultado: "link 2", url: "index.html" },
-  { etiqueta: "Opción 3", color: COLORES[2], resultado: "link 3", url: "https://example.com/3" },
-  { etiqueta: "Opción 4", color: COLORES[3], resultado: "link 4", url: "https://example.com/4" },
-  { etiqueta: "Opción 5", color: COLORES[4], resultado: "link 5", url: "https://example.com/5" },
-  { etiqueta: "Opción 6", color: COLORES[5], resultado: "link 6", url: "https://example.com/6" },
-  { etiqueta: "Opción 7", color: COLORES[6], resultado: "link 7", url: "https://example.com/7" },
+  { etiqueta: "$100", color: COLORES[0], resultado: "Juego 1", url: "https://www.youtube.com/" },
+  { etiqueta: "$700", color: COLORES[1], resultado: "Juego 2", url: "index.html" },
+  { etiqueta: "$15", color: COLORES[2], resultado: "Juego 3", url: "https://example.com/3" },
+  { etiqueta: "$1500", color: COLORES[3], resultado: "Juego 4", url: "https://example.com/4" },
+  { etiqueta: "$1000", color: COLORES[4], resultado: "Juego 5", url: "https://example.com/5" },
+  { etiqueta: "$50", color: COLORES[5], resultado: "Juego 6", url: "https://example.com/6" },
+  { etiqueta: "$400", color: COLORES[6], resultado: "Juego 7", url: "https://example.com/7" },
 ];
 
 new p5(function (p) {
@@ -43,6 +43,7 @@ new p5(function (p) {
     p.createCanvas(p.windowWidth, p.windowHeight);
     calcularDimensiones();
     p.textFont("sans-serif");
+    p.shuffle(opciones, true);
   };
 
   p.windowResized = function () {
@@ -170,7 +171,6 @@ new p5(function (p) {
     let indice = Math.floor(anguloRelativo / porcion) % cantidad;
 
     ganador = opciones[indice];
-    opciones.splice(indice, 1);
     winnerIndex = null;
 
     mostrarPopup = true;
@@ -220,17 +220,13 @@ new p5(function (p) {
     p.textStyle(p.BOLD);
     p.textSize(18);
 
-    p.text(ganador ? ganador.etiqueta : "", centroX, posY + 40);
+    p.text("Tu desafio", centroX, posY + 40);
 
     p.textSize(14);
     p.textStyle(p.NORMAL);
     p.textAlign(p.CENTER)
 
-    p.text(
-      ganador ? ganador.resultado : "",
-      centroX,
-      posY + 100,
-    );
+    p.text(ganador ? ganador.resultado : "", centroX, posY + 100);
     p.pop();
   }
 
