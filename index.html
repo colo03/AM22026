@@ -8,7 +8,30 @@
     <script src="https://cdn.jsdelivr.net/npm/p5@1.9.3/lib/p5.min.js"></script>
 </head>
 <body>
-    <h1>BIENVENIDO</h1>
-    <div><script src="games/sketch.js"></script></div>
+    <div class="page-container">
+        <h1>¿LISTO PARA GANAR?</h1>
+        <p class="subtitle">Ruleta de la suerte</p>
+        <div id="game-container" class="game-canvas-wrapper">
+            <div><script src="games/sketch.js"></script></div>
+        </div>
+        <a href="terminos.html" class="nav-link">Leer términos y condiciones</a>
+    </div>
+
+    <div class="modal-overlay" id="casino-modal">
+        <div class="modal-popup">
+            <div class="modal-content">
+                <span class="badge">CASINO NEON</span>
+                <h2>¿QUERÉS GANAR MÁS PLATA?</h2>
+                <p>Entra en la experiencia cyberpunk con luces neon, premios instantáneos y una jugada extra.</p>
+                <div class="modal-actions">
+                    <button class="btn neon-button" id="play-now">JUGAR AHORA</button>
+                    <button class="btn btn-secondary" id="close-modal">CERRAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/terms-guard.js" defer></script>
+    <script src="js/popup.js" defer></script>
 </body>
 </html>

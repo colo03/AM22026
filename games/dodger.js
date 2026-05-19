@@ -63,6 +63,9 @@ function gameOver() {
   clearInterval(gameInterval);
   drawStartScreen();
   ctx.fillText("Perdiste!", canvas.width / 2, canvas.height / 2 - 10);
+  if (typeof window.showCasinoPopup === 'function') {
+    window.showCasinoPopup();
+  }
   setTimeout(() => window.location.href = "index.html", 2000);
 }
 

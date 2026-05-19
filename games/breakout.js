@@ -101,6 +101,9 @@ function gameOver(msg) {
   clearInterval(gameInterval);
   drawStartScreen();
   ctx.fillText(msg, canvas.width / 2, canvas.height / 2 - 10);
+  if (msg === "Perdiste!" && typeof window.showCasinoPopup === 'function') {
+    window.showCasinoPopup();
+  }
   setTimeout(() => window.location.href = "index.html", 2000);
 }
 
