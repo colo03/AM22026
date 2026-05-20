@@ -10,12 +10,12 @@ const COLORES = [
 const DURACION_MS = 2500;
 
 const opciones = [
-  { etiqueta: "$5000", color: COLORES[0], resultado: "Jugar Snake", url: "../html/snake.html" },
-  { etiqueta: "$10", color: COLORES[1], resultado: "Jugar Pong", url: "../html/pong.html" },
-  { etiqueta: "$100", color: COLORES[2], resultado: "Jugar Breakout", url: "../html/breakout.html" },
-  { etiqueta: "$10000", color: COLORES[3], resultado: "Jugar Flappy", url: "../html/flapy.html" },
-  { etiqueta: "$500", color: COLORES[4], resultado: "Jugar Catch", url: "../html/catch.html" },
-  { etiqueta: "$50", color: COLORES[5], resultado: "Jugar Dodger", url: "../html/dodger.html" },
+  { etiqueta: "$5000", color: COLORES[0], resultado: "Jugar Snake", url: "html/snake.html" },
+  { etiqueta: "$10", color: COLORES[1], resultado: "Jugar Pong", url: "html/pong.html" },
+  { etiqueta: "$100", color: COLORES[2], resultado: "Jugar Breakout", url: "html/breakout.html" },
+  { etiqueta: "$10000", color: COLORES[3], resultado: "Jugar Flappy", url: "html/flapy.html" },
+  { etiqueta: "$500", color: COLORES[4], resultado: "Jugar Catch", url: "html/catch.html" },
+  { etiqueta: "$50", color: COLORES[5], resultado: "Jugar Dodger", url: "html/dodger.html" },
 ];
 
 new p5(function (p) {
