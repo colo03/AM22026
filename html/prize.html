@@ -65,104 +65,20 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="casino-modal">
-        <div class="modal-popup">
-            <div class="modal-content">
-                <span class="badge">💰 ESPERA 💰</span>
-                <h2 id="popupTitle">¿NO QUERÉS MÁS DINERO?</h2>
-                <p id="popupMessage">Tienes 3 más juegos gratis. ¡Podrías duplicar tu premio!</p>
-                <div class="modal-actions">
-                    <button class="btn neon-button" id="play-more-btn">JUGAR MÁS</button>
-                    <button class="btn btn-secondary" id="close-modal-btn">Seguir rellenando</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <script src="../js/popup.js" defer></script>
     <script>
-        const messages = [
-            {
-                title: "¡ESPERA! 💰",
-                message: "Tienes 3 giros gratis. ¡Podrías duplicar tu premio!"
-            },
-            {
-                title: "No te vayas 🎰",
-                message: "Otros jugadores ganaron MÁS jugando. ¿Vos también podes!"
-            },
-            {
-                title: "¡ÚLTIMA OPORTUNIDAD! 🔥",
-                message: "Bonificación especial: 100% extra en tu próximo juego. Solo para HOY."
-            },
-            {
-                title: "Dinero rápido 💸",
-                message: "Juega solo 2 minutos más y triplicarás tu dinero. GARANTIZADO."
-            },
-            {
-                title: "Amigos ganando 🌟",
-                message: "Tu amigo ganó $50 hace 5 minutos. ¿Vos también podes!"
-            },
-            {
-                title: "¡RETIRO PENDIENTE! 🏦",
-                message: "Antes de retirar, tenés un giro gratis exclusivo. ¡Usalo ahora!"
-            },
-            {
-                title: "OFERTA LIMITADA ⏱️",
-                message: "Multiplicá tu premio por 5x con un depósito mínimo."
-            },
-            {
-                title: "¡CUIDADO! ⚠️",
-                message: "Estás a punto de dejar tu premio en la mesa. Juega una vez más para asegurar."
-            },
-            {
-                title: "VIP STATUS 🌟",
-                message: "Ganaste estatus VIP por hoy. Juegos gratis disponibles."
-            },
-            {
-                title: "JACKPOT ACUMULADO 💰",
-                message: "El pozo acaba de subir. ¡Es tu oportunidad de llevarte todo!"
-            }
-        ];
-
-        let popupShownCount = 0;
-        const maxPopups = 5;
-
-        function showRandomPopup() {
-            const modal = document.getElementById('casino-modal');
-            if (modal && !modal.classList.contains('visible') && popupShownCount < maxPopups && Math.random() < 0.6) {
-                const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-                document.getElementById('popupTitle').textContent = randomMsg.title;
-                document.getElementById('popupMessage').textContent = randomMsg.message;
-                modal?.classList?.add('visible');
-                popupShownCount++;
-            }
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
-            const modal = document.getElementById('casino-modal');
-            const closeBtn = document.getElementById('close-modal-btn');
-            const playMoreBtn = document.getElementById('play-more-btn');
             const form = document.getElementById('prizeForm');
-            const inputs = form.querySelectorAll('input');
-
-            // Close popup
-            closeBtn?.addEventListener('click', () => {
-                modal?.classList?.remove('visible');
-            });
-
-            // Play more redirects to game
-            playMoreBtn?.addEventListener('click', () => {
-                window.location.href = "../index.html";
-            });
 
             // Randomly show popups while the user is on the page
-            setInterval(showRandomPopup, 4500);
+            window.startAggressivePopups(2000, 5, 0.6);
 
             // Form submission shows the message
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                // Show final awareness message
-                window.location.href = "awareness.html";
+                // Enviar al usuario a los términos y condiciones interminables
+                window.location.href = "terminos.html";
             });
         });
 

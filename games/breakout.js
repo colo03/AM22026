@@ -46,6 +46,11 @@ function update() {
         if (x > b.x && x < b.x + bW && y > b.y && y < b.y + bH) {
           dy = -dy;
           b.status = 0;
+              
+              // Increase the ball speed slightly to prevent infinite loops and increase difficulty
+              dx = dx > 0 ? dx + 0.25 : dx - 0.25;
+              dy = dy > 0 ? dy + 0.25 : dy - 0.25;
+              
           score += 10;
           const sb = document.getElementById("scoreBoard");
           if (sb) sb.innerText = `Score: ${score}`;

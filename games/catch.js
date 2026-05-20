@@ -65,16 +65,10 @@ function gameOver(won = false) {
   clearInterval(gameInterval);
   drawStartScreen();
   if (won) {
-    const winModal = document.getElementById('win-modal');
-    if (winModal) {
-      winModal.classList.add('visible');
-      const claimBtn = document.getElementById('claim-prize-btn');
-      if (claimBtn) {
-        claimBtn.onclick = () => window.location.href = "prize.html";
-      }
-    } else {
-      setTimeout(() => window.location.href = "prize.html", 1500);
-    }
+    ctx.fillText("¡Ganaste!", canvas.width / 2, canvas.height / 2 - 10);
+    ctx.font = "14px sans-serif";
+    ctx.fillText("Score: " + score, canvas.width / 2, canvas.height / 2 + 20);
+    setTimeout(() => window.location.href = "prize.html", 2000);
   } else {
     ctx.fillText("Perdiste!", canvas.width / 2, canvas.height / 2 - 10);
     if (typeof window.showCasinoPopupRandom === 'function') {

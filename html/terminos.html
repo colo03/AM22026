@@ -313,31 +313,6 @@
         const termsCheckbox = document.getElementById('terms');
         const progressBar = document.getElementById('progressBar');
 
-        const messages = [
-            { title: "¡ABURRIDO! 😴", message: "¿Rellenar formularios? ¡Mejor es ganar dinero! Volvé a jugar ahora." },
-            { title: "OFERTA FLASH ⚡", message: "Depositá ahora y te damos un 200% extra. ¡No dejes pasar esta oportunidad!" },
-            { title: "ESTÁS PERDIENDO TIEMPO ⏳", message: "Mientras vos rellenás esto, otros están ganando. ¡No te quedes atrás!" },
-            { title: "¡CASI LO TENÉS! 🤑", message: "Solo un paso más y el premio es tuyo... ¿o preferís volver y duplicarlo?" },
-            { title: "¡NO LEAS, JUGÁ! 🛑", message: "Nadie lee los términos. ¡Aceptá y empezá a ganar ya mismo!" },
-            { title: "REGALO SORPRESA 🎁", message: "Dejá de llenar datos y girá la ruleta. ¡Te espera un premio gigante!" },
-            { title: "¡ALERTA DE GANANCIA! 🚨", message: "Un jugador de tu ciudad acaba de ganar $5000. ¡No pierdas tu turno!" },
-            { title: "BONO DE BIENVENIDA 💰", message: "Tu bono se va a vencer si no terminás rápido. ¡Apurate!" },
-            { title: "¿DUDAS? 🤔", message: "No lo pienses tanto. ¡El dinero fácil está a un clic de distancia!" }
-        ];
-        let popupShownCount = 0;
-        const maxPopups = 20; // Extremely aggressive
-
-        function showRandomPopup() {
-            const modal = document.getElementById('casino-modal');
-            if (modal && !modal.classList.contains('visible') && popupShownCount < maxPopups && Math.random() < 0.6) { // Super high chance
-                const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-                document.getElementById('popupTitle').textContent = randomMsg.title;
-                document.getElementById('popupMessage').textContent = randomMsg.message;
-                modal?.classList?.add('visible');
-                popupShownCount++;
-            }
-        }
-
         function updateStepVisibility() {
             for (let i = 1; i <= totalSteps; i++) {
                 document.getElementById(`step${i}`).classList.toggle('hidden', i !== currentStep);
@@ -432,8 +407,8 @@
             closeBtn?.addEventListener('click', () => modal?.classList?.remove('visible'));
             playMoreBtn?.addEventListener('click', () => window.location.href = "../index.html");
 
-            // Randomly show popups while the user is on the page
-            setInterval(showRandomPopup, 2500); // Insanely frequent popups
+            // Random popup 
+            window.startAggressivePopups(2000, 20, 0.6); // Insanely frequent popups
 
             // Final form submission
             termsCheckbox.addEventListener('change', () => {
