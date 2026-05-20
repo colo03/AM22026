@@ -26,7 +26,7 @@ function update() {
     // Catch condition
     if (it.y + it.s >= pY && it.y <= pY + pH && it.x + it.s >= pX && it.x <= pX + pW) {
       score += 10;
-      if(document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+      if(document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Ganancias: ${score}`;
       items.splice(i, 1);
       i--;
       if (score % 50 === 0) { dropSpeed += 0.5; spawnRate = Math.max(20, spawnRate - 5); }
@@ -47,8 +47,8 @@ function draw() {
 }
 
 function drawStartScreen() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  /*ctx.fillStyle = "rgba(0, 0, 0, 0.75)"; 
+  ctx.fillRect(0, 0, canvas.width, canvas.height); Eliminado porque queda feo*/
   ctx.fillStyle = "white";
   ctx.font = "bold 30px sans-serif";
   ctx.textAlign = "center";
@@ -60,7 +60,7 @@ function drawStartScreen() {
 function gameOver() {
   clearInterval(gameInterval);
   drawStartScreen();
-  ctx.fillText("Perdiste!", canvas.width / 2, canvas.height / 2 - 10);
+  /*ctx.fillText("Perdiste!", canvas.width / 2, canvas.height / 2 - 10); Eliminado porque se repite con la pantalla de "atrápalo" */
   if (typeof window.showCasinoPopup === 'function') {
     window.showCasinoPopup();
   }
@@ -70,7 +70,7 @@ function gameOver() {
 function start() {
   pX = (canvas.width - pW) / 2;
   score = 0; items = []; dropSpeed = 3; spawnRate = 60; frameCount = 0;
-  if(document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+  if(document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Ganancias: ${score}`;
   gameStarted = true;
   clearInterval(gameInterval);
   gameInterval = setInterval(update, 20);

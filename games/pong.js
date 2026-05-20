@@ -66,8 +66,8 @@ function draw() {
 }
 
 function drawStartScreen() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  /*ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height); queda feo */
   ctx.fillStyle = "white";
   ctx.font = "bold 30px sans-serif";
   ctx.textAlign = "center";

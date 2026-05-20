@@ -301,3 +301,31 @@ button.enabled {
     font-size: 2.2rem;
   }
 }
+
+/* Estilo para juegos */
+
+.gameCanvas {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.18), transparent 30%), #101016;
+  border: 2px solid #1c0377;
+  box-shadow: 0 0 15px rgba(58, 16, 224, 0.5);
+  border-radius: 15px;
+}
+
+.scoreBoard {
+
+  min-width: 50vh;
+  text-align: center;
+  background: rgba(19, 19, 31, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(18px);
+  padding: 2rem;
+  margin: 0 auto;
+
+}

@@ -47,7 +47,7 @@ function update() {
   // Food collision
   if (head.x === food.x && head.y === food.y) {
     score += 10;
-    document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+    document.getElementById("scoreBoard").innerText = `Ganancias: ${score}`;
     resetFood();
   } else {
     snake.pop(); // Remove tail if no food eaten
@@ -69,8 +69,8 @@ function draw() {
 }
 
 function drawStartScreen() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  /*ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height); queda feo*/ 
   ctx.fillStyle = "white";
   ctx.font = "bold 30px sans-serif";
   ctx.textAlign = "center";
@@ -100,7 +100,7 @@ function start() {
   dx = 0;
   dy = -gridSize;
   score = 0;
-  document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+  document.getElementById("scoreBoard").innerText = `Ganancias: ${score}`;
   resetFood();
   gameStarted = true;
   clearInterval(gameInterval);

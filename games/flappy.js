@@ -30,7 +30,7 @@ function update() {
     if (p.x < birdX && !p.passed) {
       score += 10;
       const sb = document.getElementById("scoreBoard");
-      if(sb) sb.innerText = `Score: ${score}`;
+      if(sb) sb.innerText = `Ganancias: ${score}`;
       p.passed = true;
     }
   }
@@ -57,8 +57,8 @@ function draw() {
 }
 
 function drawStartScreen() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  /*ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height); queda feo */
   ctx.fillStyle = "white";
   ctx.font = "bold 30px sans-serif";
   ctx.textAlign = "center";
@@ -79,7 +79,7 @@ function gameOver() {
 
 function start() {
   birdY = 200; birdVel = 0; score = 0; frameCount = 0; pipes = [];
-  if(document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+  if(document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Ganancias: ${score}`;
   gameStarted = true;
   clearInterval(gameInterval);
   gameInterval = setInterval(update, 20);

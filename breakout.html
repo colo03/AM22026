@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+   <style>
+        body {
+            display: flex;
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;     
+            gap: 20px;               
+        }
+        </style>
+
+        <link rel="stylesheet" href="estilo/style.css">
+    </head>
+<body>
+
+<div id="scoreBoard" class="scoreBoard">Ganancias: 0</div> <!-- agregado class para estilo-->
+<canvas id= "gameCanvas" class="gameCanvas" width="400" height="400"></canvas> <!-- agreado class para estilo-->
+
+<script src="games/breakout.js"></script>
+</body>
+</html>

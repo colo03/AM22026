@@ -30,7 +30,7 @@ function update() {
   blocks = blocks.filter(b => b.y < canvas.height);
   score++;
   if (frameCount % 10 === 0 && document.getElementById("scoreBoard")) {
-    document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+    document.getElementById("scoreBoard").innerText = `Ganancias: ${score}`;
   }
   
   draw();
@@ -49,8 +49,8 @@ function draw() {
 }
 
 function drawStartScreen() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  /*ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height); queda feo */
   ctx.fillStyle = "white";
   ctx.font = "bold 30px sans-serif";
   ctx.textAlign = "center";
@@ -72,7 +72,7 @@ function gameOver() {
 function start() {
   pX = (canvas.width - pS) / 2;
   score = 0; blocks = []; frameCount = 0;
-  if (document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+  if (document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Ganancias: ${score}`;
   gameStarted = true;
   clearInterval(gameInterval);
   gameInterval = setInterval(update, 20);
