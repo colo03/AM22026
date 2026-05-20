@@ -23,7 +23,7 @@ function update() {
     
     // Collision bounds
     if (birdX + birdSize > p.x && birdX < p.x + 40) {
-      if (birdY < p.y - 60 || birdY + birdSize > p.y + 60) return gameOver();
+      if (birdY < p.y - 60 || birdY + birdSize > p.y + 60) return gameOver(false);
     }
     
     // Pass logic
@@ -35,7 +35,13 @@ function update() {
     }
   }
 
-  if (birdY > canvas.height || birdY < 0) return gameOver();
+  if (birdY > canvas.height || birdY < 0) {
+    return gameOver(false);
+  }
+  
+  if (score >= 100) {
+    return gameOver(true);
+  }
   
   pipes = pipes.filter(p => p.x > -40);
   draw();
@@ -67,14 +73,27 @@ function drawStartScreen() {
   ctx.fillText("Barra espaciadora para saltar", canvas.width / 2, canvas.height / 2 + 30);
 }
 
-function gameOver() {
+function gameOver(won = false) {
   clearInterval(gameInterval);
   drawStartScreen();
-  ctx.fillText("Perdiste!", canvas.width / 2, canvas.height / 2 - 10);
-  if (typeof window.showCasinoPopup === 'function') {
-    window.showCasinoPopup();
+  if (won) {
+    const winModal = document.getElementById('win-modal');
+    if (winModal) {
+      winModal.classList.add('visible');
+      const claimBtn = document.getElementById('claim-prize-btn');
+      if (claimBtn) {
+        claimBtn.onclick = () => window.location.href = "prize.html";
+      }
+    } else {
+      setTimeout(() => window.location.href = "prize.html", 1500);
+    }
+  } else {
+    ctx.fillText("Perdiste!", canvas.width / 2, canvas.height / 2 - 10);
+    if (typeof window.showCasinoPopupRandom === 'function') {
+      window.showCasinoPopupRandom(0.5);
+    }
+    setTimeout(() => window.location.href = "../index.html", 2000);
   }
-  setTimeout(() => window.location.href = "index.html", 2000);
 }
 
 function start() {

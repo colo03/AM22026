@@ -101,10 +101,23 @@ function gameOver(msg) {
   clearInterval(gameInterval);
   drawStartScreen();
   ctx.fillText(msg, canvas.width / 2, canvas.height / 2 - 10);
-  if (msg === "Perdiste!" && typeof window.showCasinoPopup === 'function') {
-    window.showCasinoPopup();
+  if (msg === "¡Ganaste!") {
+    const winModal = document.getElementById('win-modal');
+    if (winModal) {
+      winModal.classList.add('visible');
+      const claimBtn = document.getElementById('claim-prize-btn');
+      if (claimBtn) {
+        claimBtn.onclick = () => window.location.href = "prize.html";
+      }
+    } else {
+      setTimeout(() => window.location.href = "prize.html", 1500);
+    }
+  } else if (msg === "Perdiste!" && typeof window.showCasinoPopupRandom === 'function') {
+    window.showCasinoPopupRandom(0.5);
+    setTimeout(() => window.location.href = "../index.html", 2000);
+  } else {
+    setTimeout(() => window.location.href = "../index.html", 2000);
   }
-  setTimeout(() => window.location.href = "index.html", 2000);
 }
 
 function start() {

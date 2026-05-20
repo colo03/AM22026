@@ -23,8 +23,16 @@ function update() {
 
     // Collision condition
     if (b.y + b.h >= pY && b.y <= pY + pS && b.x + b.w >= pX && b.x <= pX + pS) {
-      return gameOver();
+      if (score >= 1000) {
+        return gameOver(true);
+      } else {
+        return gameOver(false);
+      }
     }
+  }
+  
+  if (score >= 1000) {
+    return gameOver(true);
   }
   
   blocks = blocks.filter(b => b.y < canvas.height);
@@ -59,14 +67,27 @@ function drawStartScreen() {
   ctx.fillText("Barra espaciadora para empezar", canvas.width / 2, canvas.height / 2 + 30);
 }
 
-function gameOver() {
+function gameOver(won = false) {
   clearInterval(gameInterval);
   drawStartScreen();
-  ctx.fillText("Perdiste!", canvas.width / 2, canvas.height / 2 - 10);
-  if (typeof window.showCasinoPopup === 'function') {
-    window.showCasinoPopup();
+  if (won) {
+    const winModal = document.getElementById('win-modal');
+    if (winModal) {
+      winModal.classList.add('visible');
+      const claimBtn = document.getElementById('claim-prize-btn');
+      if (claimBtn) {
+        claimBtn.onclick = () => window.location.href = "prize.html";
+      }
+    } else {
+      setTimeout(() => window.location.href = "prize.html", 1500);
+    }
+  } else {
+    ctx.fillText("Perdiste!", canvas.width / 2, canvas.height / 2 - 10);
+    if (typeof window.showCasinoPopupRandom === 'function') {
+      window.showCasinoPopupRandom(0.5);
+    }
+    setTimeout(() => window.location.href = "../index.html", 2000);
   }
-  setTimeout(() => window.location.href = "index.html", 2000);
 }
 
 function start() {

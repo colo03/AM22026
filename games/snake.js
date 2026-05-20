@@ -32,13 +32,13 @@ function update() {
 
   // Wall collision
   if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
-    return gameOver();
+    return gameOver(false);
   }
 
   // Self collision
   for (let segment of snake) {
     if (head.x === segment.x && head.y === segment.y) {
-      return gameOver();
+      return gameOver(false);
     }
   }
 
@@ -79,20 +79,33 @@ function drawStartScreen() {
   ctx.fillText("Barra espaciadora para empezar", canvas.width / 2, canvas.height / 2 + 30);
 }
 
-function gameOver() {
+function gameOver(won = false) {
   clearInterval(gameInterval);
   ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "white";
   ctx.font = "bold 30px sans-serif";
   ctx.textAlign = "center";
-  ctx.fillText("Perdiste!", canvas.width / 2, canvas.height / 2 - 10);
-  ctx.font = "18px sans-serif";
-  ctx.fillText("Volviendo a la pantalla principal", canvas.width / 2, canvas.height / 2 + 30);
   
-  setTimeout(() => {
-    window.location.href = "index.html"; // Goes back to the main wheel page
-  }, 2000);
+  if (won) {
+    const winModal = document.getElementById('win-modal');
+    if (winModal) {
+      winModal.classList.add('visible');
+      const claimBtn = document.getElementById('claim-prize-btn');
+      if (claimBtn) {
+        claimBtn.onclick = () => window.location.href = "prize.html";
+      }
+    } else {
+      setTimeout(() => window.location.href = "prize.html", 1500);
+    }
+  } else {
+    ctx.fillText("Perdiste!", canvas.width / 2, canvas.height / 2 - 10);
+    ctx.font = "18px sans-serif";
+    ctx.fillText("Volviendo a la pantalla principal", canvas.width / 2, canvas.height / 2 + 30);
+    setTimeout(() => {
+      window.location.href = "../index.html";
+    }, 2000);
+  }
 }
 
 function start() {

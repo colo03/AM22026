@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong - Juego</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <style>
+        .game-page-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        #gameCanvas {
+            background-color: #000;
+            border: 2px solid #22d3ee;
+            box-shadow: 0 0 25px rgba(34, 211, 238, 0.4);
+            border-radius: 12px;
+        }
+        #scoreBoard {
+            position: absolute;
+            top: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text);
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+        .game-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .game-header h1 {
+            margin: 0 0 0.5rem;
+            color: #f6f7ff;
+        }
+        .game-header p {
+            margin: 0;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+    <div id="scoreBoard">Jugador: 0 - Máquina: 0</div>
+    
+    <div class="game-page-container">
+        <div class="game-header">
+            <h1>Pong Clásico</h1>
+            <p>¡Sé el primero en llegar a 5 puntos!</p>
+        </div>
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+    </div>
+
+    <div class="modal-overlay" id="casino-modal">
+        <div class="modal-popup">
+            <div class="modal-content">
+                <span class="badge">CASINO NEON</span>
+                <h2>¿QUERÉS GANAR MÁS PLATA?</h2>
+                <p>Entra en la experiencia cyberpunk con luces neon, premios instantáneos y una jugada extra.</p>
+                <div class="modal-actions">
+                    <button class="btn neon-button" id="play-now">JUGAR AHORA</button>
+                    <button class="btn btn-secondary" id="close-modal">CERRAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="win-modal">
+        <div class="modal-popup">
+            <div class="modal-content">
+                <span class="badge">🎉 ¡GANASTE! 🎉</span>
+                <h2>¡FELICIDADES!</h2>
+                <p>Reclama tu premio ahora mismo.</p>
+                <div class="modal-actions">
+                    <button class="btn neon-button" id="claim-prize-btn">RECLAMAR PREMIO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../games/pong.js"></script>
+    <script src="../js/popup.js" defer></script>
+</body>
+</html>

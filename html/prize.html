@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Ganaste! - Reclama tu premio</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <style>
+        .form-focus-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            pointer-events: none;
+            z-index: 5;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="prize-card">
+            <div class="prize-header">
+                <span class="badge">🎉 ¡FELICIDADES! 🎉</span>
+                <h1>¡GANASTE!</h1>
+                <p class="subtitle">Completa el formulario para reclamar tu premio</p>
+            </div>
+            
+            <form class="prize-form" id="prizeForm">
+                <div class="form-group">
+                    <label for="name">Nombre Completo *</label>
+                    <input type="text" id="name" name="name" required placeholder="Tu nombre completo">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required placeholder="tu@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="+54 9 XXXX XXXXXX">
+                </div>
+
+                <div class="form-group">
+                    <label for="document">Documento de Identidad *</label>
+                    <input type="text" id="document" name="document" required placeholder="DNI/Cédula">
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Dirección *</label>
+                    <input type="text" id="address" name="address" required placeholder="Tu dirección completa">
+                </div>
+
+                <div class="form-group">
+                    <label for="terms" class="checkbox-label">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        Acepto los términos y condiciones
+                    </label>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn neon-button">RECLAMAR PREMIO</button>
+                    <button type="button" class="btn btn-secondary" onclick="goBackToWheel()">VOLVER AL INICIO</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="casino-modal">
+        <div class="modal-popup">
+            <div class="modal-content">
+                <span class="badge">💰 ESPERA 💰</span>
+                <h2 id="popupTitle">¿NO QUERÉS MÁS DINERO?</h2>
+                <p id="popupMessage">Tienes 3 más juegos gratis. ¡Podrías duplicar tu premio!</p>
+                <div class="modal-actions">
+                    <button class="btn neon-button" id="play-more-btn">JUGAR MÁS</button>
+                    <button class="btn btn-secondary" id="close-modal-btn">Seguir rellenando</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const messages = [
+            {
+                title: "¡ESPERA! 💰",
+                message: "Tienes 3 giros gratis. ¡Podrías duplicar tu premio!"
+            },
+            {
+                title: "No te vayas 🎰",
+                message: "Otros jugadores ganaron MÁS jugando. ¿Vos también podes!"
+            },
+            {
+                title: "¡ÚLTIMA OPORTUNIDAD! 🔥",
+                message: "Bonificación especial: 100% extra en tu próximo juego. Solo para HOY."
+            },
+            {
+                title: "Dinero rápido 💸",
+                message: "Juega solo 2 minutos más y triplicarás tu dinero. GARANTIZADO."
+            },
+            {
+                title: "Amigos ganando 🌟",
+                message: "Tu amigo ganó $50 hace 5 minutos. ¿Vos también podes!"
+            },
+            {
+                title: "¡RETIRO PENDIENTE! 🏦",
+                message: "Antes de retirar, tenés un giro gratis exclusivo. ¡Usalo ahora!"
+            },
+            {
+                title: "OFERTA LIMITADA ⏱️",
+                message: "Multiplicá tu premio por 5x con un depósito mínimo."
+            },
+            {
+                title: "¡CUIDADO! ⚠️",
+                message: "Estás a punto de dejar tu premio en la mesa. Juega una vez más para asegurar."
+            },
+            {
+                title: "VIP STATUS 🌟",
+                message: "Ganaste estatus VIP por hoy. Juegos gratis disponibles."
+            },
+            {
+                title: "JACKPOT ACUMULADO 💰",
+                message: "El pozo acaba de subir. ¡Es tu oportunidad de llevarte todo!"
+            }
+        ];
+
+        let popupShownCount = 0;
+        const maxPopups = 5;
+
+        function showRandomPopup() {
+            const modal = document.getElementById('casino-modal');
+            if (modal && !modal.classList.contains('visible') && popupShownCount < maxPopups && Math.random() < 0.6) {
+                const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+                document.getElementById('popupTitle').textContent = randomMsg.title;
+                document.getElementById('popupMessage').textContent = randomMsg.message;
+                modal?.classList?.add('visible');
+                popupShownCount++;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('casino-modal');
+            const closeBtn = document.getElementById('close-modal-btn');
+            const playMoreBtn = document.getElementById('play-more-btn');
+            const form = document.getElementById('prizeForm');
+            const inputs = form.querySelectorAll('input');
+
+            // Close popup
+            closeBtn?.addEventListener('click', () => {
+                modal?.classList?.remove('visible');
+            });
+
+            // Play more redirects to game
+            playMoreBtn?.addEventListener('click', () => {
+                window.location.href = "../index.html";
+            });
+
+            // Randomly show popups while the user is on the page
+            setInterval(showRandomPopup, 4500);
+
+            // Form submission shows the message
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show final awareness message
+                window.location.href = "awareness.html";
+            });
+        });
+
+        function goBackToWheel() {
+            window.location.href = '../index.html';
+        }
+    </script>
+</body>
+</html>

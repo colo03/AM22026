@@ -1,26 +1,21 @@
 const COLORES = [
-  "#E53935",
-  "#FF9800",
-  "#4CAF50",
-  "#7B1FA2",
-  "#FFD600",
-  "#F8F8F8",
-  "#1565C0",
-  "#00897B",
-  "#D81B60",
-  "#5D4037",
+  "#ec4899", // Neon Pink
+  "#8b5cf6", // Neon Purple
+  "#22d3ee", // Neon Cyan
+  "#f43f5e", // Rose
+  "#eab308", // Yellow
+  "#14b8a6", // Teal
 ];
 
 const DURACION_MS = 2500;
 
 const opciones = [
-  { etiqueta: "Snake", color: COLORES[0], resultado: "Jugar Snake", url: "snake.html" },
-  { etiqueta: "Pong", color: COLORES[1], resultado: "Jugar Pong", url: "pong.html" },
-  { etiqueta: "Breakout", color: COLORES[2], resultado: "Jugar Breakout", url: "breakout.html" },
-  { etiqueta: "Flappy", color: COLORES[3], resultado: "Jugar Flappy", url: "flappy.html" },
-  { etiqueta: "Catch", color: COLORES[4], resultado: "Jugar Catch", url: "catch.html" },
-  { etiqueta: "Dodger", color: COLORES[5], resultado: "Jugar Dodger", url: "dodger.html" },
-  { etiqueta: "Volver", color: COLORES[6], resultado: "Ir al Inicio", url: "index.html" },
+  { etiqueta: "$5000", color: COLORES[0], resultado: "Jugar Snake", url: "../html/snake.html" },
+  { etiqueta: "$10", color: COLORES[1], resultado: "Jugar Pong", url: "../html/pong.html" },
+  { etiqueta: "$100", color: COLORES[2], resultado: "Jugar Breakout", url: "../html/breakout.html" },
+  { etiqueta: "$10000", color: COLORES[3], resultado: "Jugar Flappy", url: "../html/flapy.html" },
+  { etiqueta: "$500", color: COLORES[4], resultado: "Jugar Catch", url: "../html/catch.html" },
+  { etiqueta: "$50", color: COLORES[5], resultado: "Jugar Dodger", url: "../html/dodger.html" },
 ];
 
 new p5(function (p) {
@@ -57,7 +52,7 @@ new p5(function (p) {
   }
 
   p.draw = function () {
-    p.background(255,255,255);
+    p.clear(); // Clear the background to let the CSS dark gradient show through
 
     if (girando) {
       let tiempoPasado = p.millis() - tiempoInicio;
@@ -108,8 +103,8 @@ new p5(function (p) {
       let fin = inicio + porcion;
 
       p.fill(opciones[i].color);
-      p.stroke(255);
-      p.strokeWeight(2);
+      p.stroke("#090912"); // Dark background color to separate slices
+      p.strokeWeight(4);
 
       p.arc(centroX, centroY, radio * 2, radio * 2, inicio, fin, p.PIE);
 
@@ -135,23 +130,29 @@ new p5(function (p) {
       p.pop();
     }
 
-    p.fill(250);
+    // Center hub styled like a neon ring
+    p.fill("#090912");
+    p.stroke("#22d3ee");
+    p.strokeWeight(3);
+    p.circle(centroX, centroY, radio * 0.25);
+    p.fill("#ffffff");
     p.noStroke();
-    p.circle(centroX, centroY, radio * 0.22);
+    p.circle(centroX, centroY, radio * 0.08);
   }
 
   function dibujarPuntero() {
     let posX = centroX;
-    let posY = centroY - radio - 20;
+    let posY = centroY - radio - 25;
 
-    p.fill("black");
-    p.noStroke();
+    p.fill("#ec4899");
+    p.stroke("#ffffff");
+    p.strokeWeight(2);
 
     // Draw a downward-pointing arrow at the top of the wheel.
     p.triangle(
-      posX - 18, posY,
-      posX + 18, posY,
-      posX, posY + 30
+      posX - 20, posY,
+      posX + 20, posY,
+      posX, posY + 35
     );
   }
 
@@ -170,7 +171,6 @@ new p5(function (p) {
     let indice = Math.floor(anguloRelativo / porcion) % cantidad;
 
     ganador = opciones[indice];
-    opciones.splice(indice, 1);
     winnerIndex = null;
 
     mostrarPopup = true;
@@ -185,17 +185,17 @@ new p5(function (p) {
     p.textSize(16);
 
     if (!girando && !mostrarPopup) {
-      p.fill(60);
+      p.fill("#a9adc8"); // var(--muted) from CSS
       if (opciones.length === 0) {
         p.text("No quedan opciones. Reiniciá la página para jugar otra vez.", centroX, p.height - 30);
       } else {
-        p.text("Tocá para girar la ruleta", centroX, p.height - 30);
+        p.text("TOCÁ PARA GIRAR LA RULETA", centroX, p.height - 30);
       }
     }
 
     if (girando) {
-      p.fill(100);
-      p.text("Girando", centroX, p.height - 30);
+      p.fill("#8b5cf6"); // var(--accent) from CSS
+      p.text("GIRANDO...", centroX, p.height - 30);
     }
   }
 
@@ -203,34 +203,56 @@ new p5(function (p) {
 
     p.push();
 
-    p.fill(0, 0, 0, opacidadPopup * 0.5);
+    // Dark overlay like CSS .modal-overlay
+    p.fill(6, 6, 16, opacidadPopup * 0.82);
     p.rect(0, 0, p.width, p.height);
 
-    let anchoCaja = Math.min(p.width * 0.8, 400);
-    let altoCaja = 160;
+    let anchoCaja = Math.min(p.width * 0.8, 440);
+    let altoCaja = 220;
 
     let posX = centroX - anchoCaja / 2;
     let posY = centroY - altoCaja / 2;
 
-    p.fill(255, 255, 255, opacidadPopup);
-    p.rect(posX, posY, anchoCaja, altoCaja, 14);
+    // Modal background like CSS .modal-popup
+    p.fill(11, 9, 24, opacidadPopup * 0.93);
+    p.stroke(139, 92, 246, opacidadPopup); // Purple border
+    p.strokeWeight(2);
+    p.rect(posX, posY, anchoCaja, altoCaja, 28); // 28px border radius
 
-    p.fill(40, 40, 40, opacidadPopup);
-    p.textAlign(p.CENTER, p.CENTER);
+    p.noStroke();
+    
+    // Badge
+    p.fill(255, 255, 255, opacidadPopup * 0.06);
+    p.rect(centroX - 70, posY + 20, 140, 24, 12);
+    p.fill(211, 197, 255, opacidadPopup);
+    p.textSize(12);
     p.textStyle(p.BOLD);
-    p.textSize(18);
+    p.textAlign(p.CENTER, p.CENTER);
+    p.text("¡GANASTE!", centroX, posY + 32);
 
-    p.text(ganador ? ganador.etiqueta : "", centroX, posY + 40);
+    // Title
+    p.fill(249, 244, 255, opacidadPopup);
+    p.textSize(32);
+    p.text(ganador ? ganador.etiqueta : "", centroX, posY + 75);
 
+    // Subtitle
     p.textSize(14);
+    p.fill(176, 168, 203, opacidadPopup); // Muted text
     p.textStyle(p.NORMAL);
-    p.textAlign(p.CENTER)
-
     p.text(
       ganador ? ganador.resultado : "",
       centroX,
-      posY + 100,
+      posY + 120,
     );
+
+    // Fake Button (Neon style)
+    p.fill(236, 72, 153, opacidadPopup); // Pink button background
+    p.rect(centroX - 90, posY + 155, 180, 40, 20);
+    p.fill(255, 255, 255, opacidadPopup);
+    p.textSize(14);
+    p.textStyle(p.BOLD);
+    p.text("JUGAR AHORA", centroX, posY + 175);
+
     p.pop();
   }
 
@@ -238,7 +260,7 @@ new p5(function (p) {
 
     if (mostrarPopup) {
       if (ganador && ganador.url) {
-        window.open(ganador.url, '_blank');
+        window.open(ganador.url, '_self');
       }
       mostrarPopup = false;
       ganador = null;

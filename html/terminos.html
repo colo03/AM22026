@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Cuenta - Términos y Condiciones</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <style>
+        /* Styles from prize.html for consistency */
+        .prize-card {
+            background: rgba(19, 19, 31, 0.95);
+            border: 2px solid var(--primary);
+            border-radius: 28px;
+            padding: 2rem;
+            box-shadow: 0 0 60px rgba(34, 211, 238, 0.2);
+            backdrop-filter: blur(18px);
+            max-width: 600px;
+            width: 100%;
+        }
+        .prize-header { text-align: center; margin-bottom: 2rem; }
+        .prize-header h1 { margin: 0 0 0.5rem; }
+        .prize-header .subtitle { color: var(--muted); }
+        .prize-form fieldset { border: none; padding: 0; margin: 0; }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: var(--text); }
+        .form-group input { width: 100%; }
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            resize: vertical;
+        }
+        .form-group textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent);
+            box-shadow: 0 0 16px rgba(139, 92, 246, 0.2);
+        }
+        .form-actions { display: flex; justify-content: space-between; margin-top: 1.5rem; }
+        .progress-bar {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .progress-bar-inner {
+            height: 10px;
+            width: 0%;
+            background: linear-gradient(90deg, #ec4899, #8b5cf6);
+            transition: width 0.5s ease-in-out;
+        }
+        .hidden { display: none; }
+        #video-container {
+            background: #000;
+            border: 1px solid var(--muted);
+            border-radius: 8px;
+            margin-top: 1rem;
+            position: relative;
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #webcam {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        #verification-text {
+            position: absolute;
+            color: white;
+            background: rgba(0,0,0,0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+        .terms-content {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            background: rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="prize-card">
+            <div class="terms-header">
+                <h1>Verificación de Cuenta</h1>
+                <p class="subtitle">Para continuar, completa los siguientes pasos.</p>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-bar-inner" id="progressBar"></div>
+            </div>
+
+            <form class="prize-form" id="verificationForm">
+                <!-- Step 1: Personal Info -->
+                <fieldset id="step1">
+                    <h3>Paso 1: Información Personal</h3>
+                    <div class="form-group">
+                        <label for="name">Nombre Completo *</label>
+                        <input type="text" id="name" name="name" required placeholder="Tu nombre completo">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required placeholder="tu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Teléfono *</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+54 9 XXXX XXXXXX">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn neon-button" onclick="nextStep()">Siguiente</button>
+                    </div>
+                </fieldset>
+
+                <!-- Step 2: Address Info -->
+                <fieldset id="step2" class="hidden">
+                    <h3>Paso 2: Comprobante de Domicilio</h3>
+                    <p>Necesitamos verificar tu lugar de residencia (Ley KYC).</p>
+                    <div class="form-group">
+                        <label for="address">Dirección Completa *</label>
+                        <input type="text" id="address" name="address" required placeholder="Calle, número, depto">
+                    </div>
+                    <div class="form-group" style="display: flex; gap: 1rem;">
+                        <div style="flex: 2;">
+                            <label for="city">Ciudad *</label>
+                            <input type="text" id="city" name="city" required placeholder="Tu ciudad">
+                        </div>
+                        <div style="flex: 1;">
+                            <label for="zip">Código Postal *</label>
+                            <input type="text" id="zip" name="zip" required placeholder="CP">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="utility-bill">Subir Factura de Servicio (Luz/Agua) *</label>
+                        <input type="file" id="utility-bill" name="utility-bill" required accept="image/*,.pdf">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Anterior</button>
+                        <button type="button" class="btn neon-button" onclick="nextStep()">Siguiente</button>
+                    </div>
+                </fieldset>
+
+                <!-- Step 3: Financial Info -->
+                <fieldset id="step3" class="hidden">
+                    <h3>Paso 2: Información Financiera</h3>
+                    <p>Para verificar tu edad y capacidad de recibir premios.</p>
+                    <div class="form-group">
+                        <label for="card-number">Número de Tarjeta de Crédito *</label>
+                        <input type="text" id="card-number" name="card-number" required placeholder="XXXX XXXX XXXX XXXX">
+                    </div>
+                    <div class="form-group" style="display: flex; gap: 1rem;">
+                        <div style="flex: 1;">
+                            <label for="expiry-date">Vencimiento *</label>
+                            <input type="text" id="expiry-date" name="expiry-date" required placeholder="MM/AA">
+                        </div>
+                        <div style="flex: 1;">
+                            <label for="cvv">CVV *</label>
+                            <input type="text" id="cvv" name="cvv" required placeholder="XXX">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Anterior</button>
+                        <button type="button" class="btn neon-button" onclick="nextStep()">Siguiente</button>
+                    </div>
+                </fieldset>
+
+                <!-- Step 4: Identity Document -->
+                <fieldset id="step4" class="hidden">
+                    <h3>Paso 4: Documento de Identidad</h3>
+                    <p>Por normativas internacionales (KYC/AML), requerimos copia de tu documento.</p>
+                    <div class="form-group">
+                        <label for="dni">Número de DNI / Pasaporte *</label>
+                        <input type="text" id="dni" name="dni" required placeholder="Ej: 12.345.678">
+                    </div>
+                    <div class="form-group">
+                        <label for="id-front">Foto del Frente del Documento *</label>
+                        <input type="file" id="id-front" name="id-front" required accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="id-back">Foto del Dorso del Documento *</label>
+                        <input type="file" id="id-back" name="id-back" required accept="image/*">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Anterior</button>
+                        <button type="button" class="btn neon-button" onclick="nextStep()">Siguiente</button>
+                    </div>
+                </fieldset>
+
+                <!-- Step 5: Security Questions -->
+                <fieldset id="step5" class="hidden">
+                    <h3>Paso 5: Preguntas de Seguridad</h3>
+                    <p>Para proteger tu cuenta de retiros no autorizados.</p>
+                    <div class="form-group">
+                        <label for="sec1">¿Cuál fue el nombre de tu primera mascota? *</label>
+                        <input type="text" id="sec1" name="sec1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sec2">¿Cuál es el apellido de soltera de tu abuela materna? *</label>
+                        <input type="text" id="sec2" name="sec2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sec3">¿En qué ciudad se conocieron tus padres? *</label>
+                        <input type="text" id="sec3" name="sec3" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Anterior</button>
+                        <button type="button" class="btn neon-button" onclick="nextStep()">Siguiente</button>
+                    </div>
+                </fieldset>
+
+                <!-- Step 6: Webcam Verification -->
+                <fieldset id="step6" class="hidden">
+                    <h3>Paso 3: Verificación de Identidad por Webcam</h3>
+                    <p>Necesitamos confirmar que sos vos. Por favor, permití el acceso a tu cámara.</p>
+                    <div id="video-container">
+                        <video id="webcam" autoplay playsinline></video>
+                        <div id="verification-text">Esperando cámara...</div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Anterior</button>
+                        <button type="button" class="btn neon-button" id="start-verification-btn" onclick="startVerification()">Iniciar Verificación</button>
+                    </div>
+                </fieldset>
+
+                <!-- Step 7: Anti-Bot Validation -->
+                <fieldset id="step7" class="hidden">
+                    <h3>Paso 7: Verificación Anti-Bots</h3>
+                    <p>Por favor, copiá EXACTAMENTE el siguiente texto respetando mayúsculas, minúsculas, espacios y puntuación para demostrar que sos humano:</p>
+                    <blockquote style="background: rgba(0,0,0,0.3); padding: 1rem; border-left: 4px solid var(--accent); margin-bottom: 1rem; font-style: italic;">
+                        Reconozco y acepto plenamente que el Casino Neon puede retener mis fondos por un plazo de hasta 90 días hábiles para verificaciones de seguridad adicionales.
+                    </blockquote>
+                    <div class="form-group">
+                        <label for="captcha">Escribí el texto aquí: *</label>
+                        <textarea id="captcha" name="captcha" required rows="4"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Anterior</button>
+                        <button type="button" class="btn neon-button" onclick="nextStep()">Siguiente</button>
+                    </div>
+                </fieldset>
+
+                <!-- Step 8: Terms and Conditions -->
+                <fieldset id="step8" class="hidden">
+                    <h3>Paso 4: Términos y Condiciones</h3>
+                    <div class="terms-content">
+                        <!-- Original terms content goes here -->
+                        <div class="terms-section">
+                            <h2 class="section-title">Uso de la plataforma</h2>
+                            <p class="section-text">El acceso y la utilización de los servicios ofrecidos en esta plataforma se rigen por principios de intención y estilo, sin que esto implique una obligación legal verdadera. Los usuarios aceptan navegar por los apartados con pleno conocimiento de que el contenido es ficticio.</p>
+                            <p class="section-text">La experiencia visual está diseñada para producir una sensación coherente, respetando las reglas internas de la plataforma y los elementos estéticos que definen su identidad. El uso continuado se interpreta como una aceptación tácita de estas normas estilísticas.</p>
+                        </div>
+                        <div class="terms-section">
+                            <h2 class="section-title">Privacidad</h2>
+                            <p class="section-text">Los datos recogidos en esta representación se procesan bajo un enfoque hipotético. El término "privacidad" describe un valor de protección elevada, aplicado conforme al estilo visual y a la narrativa del sitio. Al usar la verificación por webcam, aceptas que podemos almacenar y procesar tu imagen para fines de seguridad y marketing.</p>
+                            <p class="section-text">Cualquier información presentada en los formularios o elementos de interacción puede ser usada para mejorar la experiencia ficticia y para enviarte ofertas promocionales. El usuario comprende que estos datos no corresponden a procesos reales de seguimiento ni a una base de datos efectiva, pero la simulación busca ser lo más realista posible.</p>
+                        </div>
+                        <div class="terms-section">
+                            <h2 class="section-title">Premios</h2>
+                            <p class="section-text">Los premios descritos son parte de la ambientación. Los incentivos mencionados se presentan con una tonalidad aspiracional, destinada a reforzar la atmósfera de un casino neon sin prometer entregas concretas. La empresa se reserva el derecho de anular cualquier premio si se sospecha de actividad fraudulenta.</p>
+                        </div>
+                        <!-- ... more terms ... -->
+                    </div>
+                    <div class="form-group">
+                        <label for="terms" class="checkbox-label">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            He leído y acepto los términos y condiciones
+                        </label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Anterior</button>
+                        <button type="submit" class="btn neon-button" id="continueButton" disabled>Continuar</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <!-- Popup Modal -->
+    <div class="modal-overlay" id="casino-modal">
+        <div class="modal-popup">
+            <div class="modal-content">
+                <span class="badge">💰 ESPERA 💰</span>
+                <h2 id="popupTitle">¿NO QUERÉS MÁS DINERO?</h2>
+                <p id="popupMessage">Tienes 3 más juegos gratis. ¡Podrías duplicar tu premio!</p>
+                <div class="modal-actions">
+                    <button class="btn neon-button" id="play-more-btn">JUGAR MÁS</button>
+                    <button class="btn btn-secondary" id="close-modal-btn">Seguir rellenando</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/popup.js" defer></script>
+    <script>
+        let currentStep = 1;
+        const totalSteps = 8;
+        const form = document.getElementById('verificationForm');
+        const continueButton = document.getElementById('continueButton');
+        const termsCheckbox = document.getElementById('terms');
+        const progressBar = document.getElementById('progressBar');
+
+        const messages = [
+            { title: "¡ABURRIDO! 😴", message: "¿Rellenar formularios? ¡Mejor es ganar dinero! Volvé a jugar ahora." },
+            { title: "OFERTA FLASH ⚡", message: "Depositá ahora y te damos un 200% extra. ¡No dejes pasar esta oportunidad!" },
+            { title: "ESTÁS PERDIENDO TIEMPO ⏳", message: "Mientras vos rellenás esto, otros están ganando. ¡No te quedes atrás!" },
+            { title: "¡CASI LO TENÉS! 🤑", message: "Solo un paso más y el premio es tuyo... ¿o preferís volver y duplicarlo?" },
+            { title: "¡NO LEAS, JUGÁ! 🛑", message: "Nadie lee los términos. ¡Aceptá y empezá a ganar ya mismo!" },
+            { title: "REGALO SORPRESA 🎁", message: "Dejá de llenar datos y girá la ruleta. ¡Te espera un premio gigante!" },
+            { title: "¡ALERTA DE GANANCIA! 🚨", message: "Un jugador de tu ciudad acaba de ganar $5000. ¡No pierdas tu turno!" },
+            { title: "BONO DE BIENVENIDA 💰", message: "Tu bono se va a vencer si no terminás rápido. ¡Apurate!" },
+            { title: "¿DUDAS? 🤔", message: "No lo pienses tanto. ¡El dinero fácil está a un clic de distancia!" }
+        ];
+        let popupShownCount = 0;
+        const maxPopups = 20; // Extremely aggressive
+
+        function showRandomPopup() {
+            const modal = document.getElementById('casino-modal');
+            if (modal && !modal.classList.contains('visible') && popupShownCount < maxPopups && Math.random() < 0.6) { // Super high chance
+                const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+                document.getElementById('popupTitle').textContent = randomMsg.title;
+                document.getElementById('popupMessage').textContent = randomMsg.message;
+                modal?.classList?.add('visible');
+                popupShownCount++;
+            }
+        }
+
+        function updateStepVisibility() {
+            for (let i = 1; i <= totalSteps; i++) {
+                document.getElementById(`step${i}`).classList.toggle('hidden', i !== currentStep);
+            }
+            progressBar.style.width = `${((currentStep - 1) / (totalSteps - 1)) * 100}%`;
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                // Basic validation for current step
+                const currentFieldset = document.getElementById(`step${currentStep}`);
+                const inputs = currentFieldset.querySelectorAll('input[required], textarea[required]');
+                let allValid = true;
+                inputs.forEach(input => {
+                    if (!input.value) {
+                        input.style.borderColor = 'red';
+                        allValid = false;
+                    } else {
+                        input.style.borderColor = '';
+                    }
+                });
+
+                // Step 7 strict Captcha validation
+                if (currentStep === 7 && allValid) {
+                    const expected = "Reconozco y acepto plenamente que el Casino Neon puede retener mis fondos por un plazo de hasta 90 días hábiles para verificaciones de seguridad adicionales.";
+                    const inputStr = document.getElementById('captcha').value;
+                    if (inputStr !== expected) {
+                        alert('El texto no coincide exactamente. Por favor, revisá la puntuación, tildes, mayúsculas y espacios extras.');
+                        document.getElementById('captcha').style.borderColor = 'red';
+                        return; // Prevent advancing
+                    }
+                }
+
+                if (allValid) {
+                    currentStep++;
+                    updateStepVisibility();
+                } else {
+                    alert('Por favor, completa todos los campos obligatorios.');
+                }
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepVisibility();
+            }
+        }
+
+        async function startVerification() {
+            const video = document.getElementById('webcam');
+            const verificationText = document.getElementById('verification-text');
+            const startBtn = document.getElementById('start-verification-btn');
+            startBtn.disabled = true;
+            verificationText.textContent = 'Iniciando cámara...';
+
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    video.srcObject = stream;
+                    verificationText.textContent = 'Verificando... Mantené la cara centrada.';
+                    
+                    // Simulate verification process
+                    setTimeout(() => {
+                        verificationText.textContent = '¡Verificación Exitosa!';
+                        stream.getTracks().forEach(track => track.stop()); // Stop camera
+                        video.srcObject = null;
+                        setTimeout(nextStep, 1500);
+                    }, 4000); // "Verification" takes 4 seconds
+
+                } catch (error) {
+                    console.error("Error accessing webcam: ", error);
+                    verificationText.textContent = 'Error de cámara. No se pudo verificar.';
+                    alert('No se pudo acceder a la cámara. La verificación de identidad es obligatoria para continuar. Por favor, habilita el acceso y volvé a intentarlo.');
+                    startBtn.disabled = false;
+                }
+            } else {
+                alert('Tu navegador no soporta la verificación por cámara.');
+                verificationText.textContent = 'Cámara no soportada.';
+                startBtn.disabled = false;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStepVisibility();
+
+            // Popups logic
+            const modal = document.getElementById('casino-modal');
+            const closeBtn = document.getElementById('close-modal-btn');
+            const playMoreBtn = document.getElementById('play-more-btn');
+
+            closeBtn?.addEventListener('click', () => modal?.classList?.remove('visible'));
+            playMoreBtn?.addEventListener('click', () => window.location.href = "../index.html");
+
+            // Randomly show popups while the user is on the page
+            setInterval(showRandomPopup, 2500); // Insanely frequent popups
+
+            // Final form submission
+            termsCheckbox.addEventListener('change', () => {
+                continueButton.disabled = !termsCheckbox.checked;
+            });
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (!termsCheckbox.checked) {
+                    alert('Debes aceptar los términos y condiciones.');
+                    return;
+                }
+                localStorage.setItem('termsAccepted', 'true');
+                window.location.href = '../index.html';
+            });
+        });
+    </script>
+</body>
+</html>
