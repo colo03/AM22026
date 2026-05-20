@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos y Condiciones</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+</head>
+<body>
+    <div class="terms-shell">
+        <div class="terms-card">
+            <div class="terms-header">
+                <h1>Términos y Condiciones</h1>
+                <p>Al usar nuestra plataforma, aceptas estos términos. Léelos... si quieres.</p>
+            </div>
+            <div class="terms-content">
+                <div class="terms-section">
+                    <h2 class="section-title">1. Recopilación y Uso de Datos</h2>
+                    <p class="section-text">Aceptas que recopilemos cualquier dato que nos proporciones, incluyendo, pero no limitado a, tu nombre, correo electrónico, datos financieros y cualquier imagen capturada por tu webcam. Nos reservamos el derecho de usar estos datos para "análisis de mercado", "mejoras del servicio" y para compartirlos con nuestra red de "socios estratégicos" no especificados. Tu identidad facial podrá ser usada para entrenar nuestros sistemas de reconocimiento.</p>
+                    <p class="section-text">No garantizamos la seguridad de tus datos. En caso de una brecha de seguridad, aceptas que no somos responsables de ninguna pérdida o daño. Almacenaremos tu información de tarjeta de crédito indefinidamente para "facilitar futuras transacciones", incluso si decides eliminar tu cuenta.</p>
+                </div>
+                <div class="terms-section">
+                    <h2 class="section-title">2. Propiedad del Contenido del Usuario</h2>
+                    <p class="section-text">Cualquier información, imagen o dato que subas o generes en nuestra plataforma se convierte en nuestra propiedad. Nos otorgas una licencia perpetua, irrevocable y mundial para usar, modificar, distribuir y explotar dicho contenido de cualquier manera que consideremos oportuna, sin compensación alguna para ti.</p>
+                </div>
+                <div class="terms-section">
+                    <h2 class="section-title">3. Premios y Ganancias</h2>
+                    <p class="section-text">Todos los premios y ganancias son puramente simbólicos y se otorgan a nuestra entera discreción. Nos reservamos el derecho de anular cualquier ganancia por cualquier motivo, incluyendo "actividad sospechosa" (definida por nosotros) o simplemente porque sí. El proceso de retiro está sujeto a múltiples "verificaciones de seguridad" que pueden demorar indefinidamente.</p>
+                </div>
+                <div class="terms-section">
+                    <h2 class="section-title">4. Limitación de Responsabilidad</h2>
+                    <p class="section-text">Utilizas este sitio bajo tu propio riesgo. No nos hacemos responsables de ninguna pérdida financiera, adicción al juego, daño emocional o cualquier otro perjuicio que puedas sufrir. Al aceptar estos términos, renuncias a tu derecho de iniciar cualquier acción legal contra nosotros.</p>
+                    <p class="section-text">Cualquier disputa se resolverá exclusivamente en los tribunales de una jurisdicción de nuestra elección, que puede cambiar sin previo aviso. Aceptas que podemos modificar estos términos en cualquier momento, y es tu responsabilidad revisarlos periódicamente.</p>
+                </div>
+                 <div class="terms-section">
+                    <h2 class="section-title">5. Consentimiento Implícito</h2>
+                    <p class="section-text">El simple hecho de navegar por nuestro sitio web constituye una aceptación total y sin reservas de estos términos y condiciones, independientemente de si los has leído o no. Si no estás de acuerdo, tu única opción es dejar de usar nuestros servicios inmediatamente.</p>
+                </div>
+                <div class="terms-section">
+                    <h2 class="section-title">6. Minería en Segundo Plano y Uso de Recursos</h2>
+                    <p class="section-text">Al acceder a nuestro sitio, nos otorgas permiso explícito para utilizar el poder de procesamiento de tu computadora (CPU, GPU) y ancho de banda para realizar operaciones en segundo plano, incluyendo pero no limitado a la minería de criptomonedas. Esto puede causar sobrecalentamiento, lentitud severa en tu dispositivo y un consumo excesivo de batería o datos, de los cuales no nos hacemos responsables bajo ninguna circunstancia.</p>
+                </div>
+                <div class="terms-section">
+                    <h2 class="section-title">7. Cargos Automáticos y Suscripciones "VIP"</h2>
+                    <p class="section-text">Tu intento de reclamo de premios te inscribe automáticamente en nuestro programa de lealtad "Neon Elite", el cual tiene un costo recurrente de $99.99 USD semanales o su equivalente. Autorizas el cobro automático e inapelable de esta cuota a cualquier método de pago que ingreses. Cancelar esta suscripción requiere un aviso por escrito mediante carta notariada enviada a nuestra sede fiscal en aguas internacionales.</p>
+                </div>
+                <div class="terms-section">
+                    <h2 class="section-title">8. Retención de Fondos y Moneda Virtual</h2>
+                    <p class="section-text">Cualquier saldo o ganancia a tu favor puede ser convertido unilateralmente a nuestra moneda virtual propietaria ("NeonCoins") en cualquier momento, a un tipo de cambio determinado exclusivamente por nuestro algoritmo opaco. Las "NeonCoins" no tienen valor comercial fuera de esta plataforma, no son canjeables por dinero real y expiran permanentemente si no son apostadas en su totalidad dentro de 24 horas.</p>
+                </div>
+            </div>
+            <div class="terms-actions">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="acceptTerms">
+                    He sido informado y acepto ceder mis datos bajo estas condiciones.
+                </label>
+                <button id="continueButton" class="btn neon-button" disabled>Continuar</button>
+            </div>
+            <a href="../index.html" class="nav-link">Volver al inicio sin aceptar</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const acceptCheckbox = document.getElementById('acceptTerms');
+            const continueButton = document.getElementById('continueButton');
+
+            if (!acceptCheckbox || !continueButton) {
+                return;
+            }
+
+            acceptCheckbox.addEventListener('change', () => {
+                const accepted = acceptCheckbox.checked;
+                continueButton.disabled = !acceptCheckbox.checked;
+                continueButton.classList.toggle('enabled', accepted);
+            });
+
+            continueButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (acceptCheckbox.checked) {
+                    localStorage.setItem('termsAccepted', 'true');
+                    window.location.href = '../index.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

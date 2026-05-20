@@ -228,7 +228,7 @@ new p5(function (p) {
     p.textSize(12);
     p.textStyle(p.BOLD);
     p.textAlign(p.CENTER, p.CENTER);
-    p.text("¡GANASTE!", centroX, posY + 32);
+    p.text("Juga Por:", centroX, posY + 32);
 
     // Title
     p.fill(249, 244, 255, opacidadPopup);
