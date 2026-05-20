@@ -3,6 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const onTermsPage = window.location.href.includes('terminos.html');
 
   if (!accepted && !onTermsPage) {
-    window.location.href = 'terminos.html';
+    window.location.href = '../html/terminos.html';
   }
 });
