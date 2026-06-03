@@ -105,11 +105,10 @@ function start() {
 }
 
 window.addEventListener("keydown", e => {
-  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key) || e.code === "Space") {
     e.preventDefault();
   }
   if (e.code === "Space") {
-    e.preventDefault();
     if (!gameStarted) start(); else birdVel = -8;
   }
 });

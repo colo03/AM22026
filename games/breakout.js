@@ -136,12 +136,12 @@ function start() {
 }
 
 window.addEventListener("keydown", e => {
-  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key) || e.code === "Space") {
     e.preventDefault();
   }
   if (e.key === "ArrowLeft") leftPressed = true;
   else if (e.key === "ArrowRight") rightPressed = true;
-  else if (e.code === "Space" && !gameStarted) { e.preventDefault(); start(); }
+  else if (e.code === "Space" && !gameStarted) { start(); }
 });
 window.addEventListener("keyup", e => { if (e.key === "ArrowLeft") leftPressed = false; else if (e.key === "ArrowRight") rightPressed = false; });
 drawStartScreen();

@@ -82,23 +82,30 @@ let popupShownCount = 0;
 
 // Función principal para spamear al usuario mientras está en la página
 window.startAggressivePopups = (interval = 2000, maxPopups = 20, chance = 0.6) => {
-    // Configuramos un temporizador (loop) que se repite cada X milisegundos
-    setInterval(() => {
-        // Verificamos si no superamos el máximo de popups y pasamos el check de probabilidad
-        if (popupShownCount < maxPopups && Math.random() < chance) {
+    let lastPopupTime = 0;
+
+    const attemptPopup = () => {
+        const currentTime = Date.now();
+        
+        // Verificamos si pasó el tiempo del intervalo, si no superamos el máximo y el check de probabilidad
+        if (currentTime - lastPopupTime > interval && popupShownCount < maxPopups && Math.random() < chance) {
             // Generamos una RÁFAGA de popups simultáneos (entre 1 y 3 ventanas a la vez)
             const burstCount = Math.floor(Math.random() * 3) + 1;
             
             for (let i = 0; i < burstCount; i++) {
                 if (popupShownCount < maxPopups) {
-                    // Elegimos un mensaje aleatorio para cada ventana
                     const randomMsg = casinoMessages[Math.floor(Math.random() * casinoMessages.length)];
                     openRealPopup(randomMsg.title, randomMsg.text);
                     popupShownCount++;
                 }
             }
+            lastPopupTime = currentTime;
         }
-    }, interval);
+    };
+
+    // Escuchamos interacciones reales del usuario para burlar el bloqueador de popups del navegador
+    document.addEventListener('click', attemptPopup);
+    document.addEventListener('keydown', attemptPopup);
 };
 
 // Evento que se ejecuta al cargar la página (actualmente solo maneja los viejos modales si todavía existieran en algún archivo HTML)
