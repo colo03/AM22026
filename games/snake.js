@@ -121,6 +121,9 @@ function start() {
 }
 
 window.addEventListener("keydown", e => {
+  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+    e.preventDefault(); // Evita que la página haga scroll con las flechas
+  }
   if (e.key === "ArrowUp" && dy === 0) { dx = 0; dy = -gridSize; }
   else if (e.key === "ArrowDown" && dy === 0) { dx = 0; dy = gridSize; }
   else if (e.key === "ArrowLeft" && dx === 0) { dx = -gridSize; dy = 0; }

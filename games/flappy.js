@@ -105,6 +105,9 @@ function start() {
 }
 
 window.addEventListener("keydown", e => {
+  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+    e.preventDefault();
+  }
   if (e.code === "Space") {
     e.preventDefault();
     if (!gameStarted) start(); else birdVel = -8;

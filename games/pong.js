@@ -115,6 +115,9 @@ function start() {
 }
 
 window.addEventListener("keydown", e => {
+  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+    e.preventDefault();
+  }
   if (e.key === "ArrowUp") upPressed = true;
   else if (e.key === "ArrowDown") downPressed = true;
   else if (e.code === "Space" && !gameStarted) { e.preventDefault(); start(); }

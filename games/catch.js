@@ -88,6 +88,9 @@ function start() {
 }
 
 window.addEventListener("keydown", e => {
+  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+    e.preventDefault();
+  }
   if (e.key === "ArrowLeft") leftPressed = true;
   else if (e.key === "ArrowRight") rightPressed = true;
   else if (e.code === "Space" && !gameStarted) { e.preventDefault(); start(); }

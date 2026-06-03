@@ -99,6 +99,14 @@ function start() {
   gameInterval = setInterval(update, 20);
 }
 
-window.addEventListener("keydown", e => { if (e.key === "ArrowLeft") leftPressed = true; else if (e.key === "ArrowRight") rightPressed = true; else if (e.code === "Space" && !gameStarted) { e.preventDefault(); start(); } });
+window.addEventListener("keydown", e => {
+  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+    e.preventDefault();
+  }
+  if (e.key === "ArrowLeft") leftPressed = true;
+  else if (e.key === "ArrowRight") rightPressed = true;
+  else if (e.code === "Space" && !gameStarted) { e.preventDefault(); start(); }
+});
+
 window.addEventListener("keyup", e => { if (e.key === "ArrowLeft") leftPressed = false; else if (e.key === "ArrowRight") rightPressed = false; });
 drawStartScreen();
