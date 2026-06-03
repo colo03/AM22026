@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pong - Juego</title>
-    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="stylesheet" href="/estilo/estiloJuegos.css">
     <style>
         .game-page-container {
             display: flex;
@@ -42,8 +42,19 @@
         }
     </style>
 </head>
+<script>
+    window.addEventListener("keydown", function(e) {
+        if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.code)) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+</script>
 <body>
-    <div id="scoreBoard">Jugador: 0 - Máquina: 0</div>
+        <div class="top-banner-wrapper">
+            <div class="top-banner-body">
+            <img src="/recursos/pongBanner.png" id="top-banner-img" alt="" />
+    </div>
+    <div id="scoreBoard">Multiplicador de dinero: x0 - Pierdes: x0</div>
     
     <div class="game-page-container">
         <div class="game-header">
@@ -82,5 +93,28 @@
 
     <script src="../games/pong.js"></script>
     <script src="../js/popup.js" defer></script>
+
+        <div id="bannerCompleto">
+        <script>window.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth" // Smooth scrolling animation
+                });
+            }, 2000); // 
+            });
+        </script>
+        <script src="/js/banner.js"></script>
+        <div class="banner-wrapper">
+            <div class="banner-titlebar">
+            <span>publi</span>
+            <span class="banner-close" onclick="spawnNewBanner()">X</span>
+            </div>
+        <div class="banner-body">
+            <a href="#" id="banner-link" target="_blank" rel="noopener noreferrer">
+            <img src="" id="banner-img" alt="Net Art Advertisement" width="468" height="60" />
+        </a>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,10 +1,10 @@
 const COLORES = [
-  "#ec4899", // Neon Pink
-  "#8b5cf6", // Neon Purple
-  "#22d3ee", // Neon Cyan
-  "#f43f5e", // Rose
-  "#eab308", // Yellow
-  "#14b8a6", // Teal
+  "rgba(236, 72, 153, 0.65)", // Pink de neón con 65% de opacidad
+  "rgba(139, 92, 246, 0.65)", // Purple de neón con 65% de opacidad
+  "rgba(34, 211, 238, 0.65)", // Cyan de neón con 65% de opacidad
+  "rgba(244, 63, 94, 0.65)",  // Rose con 65% de opacidad
+  "rgba(234, 179, 8, 0.65)",  // Yellow con 65% de opacidad
+  "rgba(20, 184, 166, 0.65)",  // Teal con 65% de opacidad
 ];
 
 const DURACION_MS = 2500;
@@ -34,10 +34,18 @@ new p5(function (p) {
 
   let centroX, centroY, radio;
 
+  let imagenFondoRuleta;
+
+  p.preload = function () {
+    // Reemplazá por la ruta real de tu PNG circular general
+    imagenFondoRuleta = p.loadImage("/recursos/ruleta.png"); 
+  };
+
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
     calcularDimensiones();
     p.textFont("sans-serif");
+    p.imageMode(p.CENTER);
   };
 
   p.windowResized = function () {
@@ -68,6 +76,14 @@ new p5(function (p) {
       }
     }
 
+if (imagenFondoRuleta) {
+      p.push();
+      p.translate(centroX, centroY); // Movemos el origen al centro de la ruleta
+      p.rotate(anguloActual);        // Rotamos el lienzo según el ángulo de giro
+      p.image(imagenFondoRuleta, 0, 0, radio * 2, radio * 2); // Dibujamos en (0,0) relativo
+      p.pop();
+    }
+
     dibujarRuleta();
     dibujarPuntero();
     dibujarTextoInferior();
@@ -81,33 +97,35 @@ new p5(function (p) {
   function dibujarRuleta() {
     let cantidad = opciones.length;
 
-    if (cantidad === 0) {
-      // If there are no options left, show an empty wheel state.
-      p.fill(240);
-      p.noStroke();
-      p.circle(centroX, centroY, radio * 2);
-      p.fill(60);
-      p.textAlign(p.CENTER, p.CENTER);
-      p.textSize(16);
-      p.text("Sin opciones", centroX, centroY);
-      return;
-    }
+    if (cantidad === 0) return;
 
     let porcion = p.TWO_PI / cantidad;
-
     let textoSize = Math.max(12, radio / 10);
 
-    for (let i = 0; i < cantidad; i++) {
+    // --- EFECTO VISUAL CLAVE ---
+    // Cambiamos el modo de fusión para que el color interactúe con el PNG de atrás.
+    // Opciones geniales: p.MULTIPLY (oscurece/tinta), p.SCREEN (ilumina), p.ADD (brillo neón extremo)
+    p.blendMode(p.ADD); 
 
+    for (let i = 0; i < cantidad; i++) {
       let inicio = anguloActual + i * porcion - p.HALF_PI;
       let fin = inicio + porcion;
 
+      // El color ahora tiene transparencia (definida arriba en el array con rgba)
       p.fill(opciones[i].color);
-      p.stroke("#090912"); // Dark background color to separate slices
-      p.strokeWeight(4);
+      p.stroke("#090912"); // Separadores de gajos
+      p.strokeWeight(3);
 
       p.arc(centroX, centroY, radio * 2, radio * 2, inicio, fin, p.PIE);
+    }
 
+    // --- RESTAURAR MODO DE FUSIÓN ---
+    // Es vital volver a BLEND para que los textos, puntero y popups se dibujen normal
+    p.blendMode(p.BLEND);
+
+    // Dibujamos los textos por encima en una pasada limpia
+    for (let i = 0; i < cantidad; i++) {
+      let inicio = anguloActual + i * porcion - p.HALF_PI;
       let anguloMedio = inicio + porcion / 2;
 
       let posX = centroX + Math.cos(anguloMedio) * radio * 0.65;
@@ -116,21 +134,16 @@ new p5(function (p) {
       p.push();
       p.translate(posX, posY);
       p.rotate(anguloMedio + p.HALF_PI);
-
       p.textAlign(p.CENTER, p.CENTER);
       p.noStroke();
-
-      let brillo = calcularBrilloHex(opciones[i].color);
-      p.fill(brillo > 170 ? 30 : 255);
-
+      p.fill(255); // Texto siempre blanco para que contraste con el efecto
       p.textSize(textoSize);
       p.textStyle(p.BOLD);
       p.text(opciones[i].etiqueta, 0, 0);
-
       p.pop();
     }
 
-    // Center hub styled like a neon ring
+    // Centro de la ruleta (Neon ring)
     p.fill("#090912");
     p.stroke("#22d3ee");
     p.strokeWeight(3);
@@ -138,6 +151,33 @@ new p5(function (p) {
     p.fill("#ffffff");
     p.noStroke();
     p.circle(centroX, centroY, radio * 0.08);
+  }
+
+  // [El resto de las funciones: dibujarPuntero, determinarGanador, dibujarPopup, mousePressed se mantienen exactamente iguales al original]
+  function dibujarPuntero() {
+    let posX = centroX;
+    let posY = centroY - radio - 25;
+    p.fill("#ec4899"); p.stroke("#ffffff"); p.strokeWeight(2);
+    p.triangle(posX - 20, posY, posX + 20, posY, posX, posY + 35);
+  }
+
+  function determinarGanador() {
+    if (opciones.length === 0) { ganador = null; mostrarPopup = false; return; }
+    let cantidad = opciones.length;
+    let porcion = p.TWO_PI / cantidad;
+    let anguloRelativo = (p.TWO_PI - anguloActual) % p.TWO_PI;
+    let indice = Math.floor(anguloRelativo / porcion) % cantidad;
+    ganador = opciones[indice]; winnerIndex = null; mostrarPopup = true; opacidadPopup = 0;
+  }
+
+  function dibujarTextoInferior() {
+    p.textAlign(p.CENTER, p.CENTER); p.noStroke(); p.textStyle(p.BOLD); p.textSize(16);
+    if (!girando && !mostrarPopup) {
+      p.fill("#a9adc8");
+      if (opciones.length === 0) p.text("No quedan opciones.", centroX, p.height - 30);
+      else p.text("TOCÁ PARA GIRAR LA RULETA", centroX, p.height - 30);
+    }
+    if (girando) { p.fill("#8b5cf6"); p.text("GIRANDO...", centroX, p.height - 30); }
   }
 
   function dibujarPuntero() {
@@ -199,62 +239,133 @@ new p5(function (p) {
     }
   }
 
-  function dibujarPopup() {
 
-    p.push();
+function dibujarPopup() {
+  p.push();
 
-    // Dark overlay like CSS .modal-overlay
-    p.fill(6, 6, 16, opacidadPopup * 0.82);
-    p.rect(0, 0, p.width, p.height);
+  // 1. Windows 98 Light Screen Dither/Dimming (Instead of a heavy modern dark tint)
+  p.fill(0, 0, 0, opacidadPopup * 0.15); 
+  p.noStroke();
+  p.rect(0, 0, p.width, p.height);
 
-    let anchoCaja = Math.min(p.width * 0.8, 440);
-    let altoCaja = 220;
+  let anchoCaja = Math.min(p.width * 0.8, 440);
+  let altoCaja = 240; // Expanded slightly to comfortably fit the Win98 Titlebar
 
-    let posX = centroX - anchoCaja / 2;
-    let posY = centroY - altoCaja / 2;
+  let posX = centroX - anchoCaja / 2;
+  let posY = centroY - altoCaja / 2;
 
-    // Modal background like CSS .modal-popup
-    p.fill(11, 9, 24, opacidadPopup * 0.93);
-    p.stroke(139, 92, 246, opacidadPopup); // Purple border
-    p.strokeWeight(2);
-    p.rect(posX, posY, anchoCaja, altoCaja, 28); // 28px border radius
+  // 2. Main Window Background (Face Color: #c0c0c0)
+  p.fill(192, 192, 192, opacidadPopup);
+  p.noStroke();
+  p.rect(posX, posY, anchoCaja, altoCaja);
 
-    p.noStroke();
-    
-    // Badge
-    p.fill(255, 255, 255, opacidadPopup * 0.06);
-    p.rect(centroX - 70, posY + 20, 140, 24, 12);
-    p.fill(211, 197, 255, opacidadPopup);
-    p.textSize(12);
-    p.textStyle(p.BOLD);
-    p.textAlign(p.CENTER, p.CENTER);
-    p.text("Juga Por:", centroX, posY + 32);
+  // 3. Classic 3D Window Bevel Borders (Outer White, Inner Dark Grey, Bottom-Right Black)
+  p.strokeWeight(1);
+  
+  // Highlighting Top and Left edges (White)
+  p.stroke(255, 255, 255, opacidadPopup);
+  p.line(posX, posY, posX + anchoCaja, posY);
+  p.line(posX, posY, posX, posY + altoCaja);
+  p.line(posX + 1, posY + 1, posX + anchoCaja - 1, posY + 1);
+  p.line(posX + 1, posY + 1, posX + 1, posY + altoCaja - 1);
 
-    // Title
-    p.fill(249, 244, 255, opacidadPopup);
-    p.textSize(32);
-    p.text(ganador ? ganador.etiqueta : "", centroX, posY + 75);
+  // Shadow Bottom and Right edges (Dark Grey)
+  p.stroke(128, 128, 128, opacidadPopup);
+  p.line(posX + 1, posY + altoCaja - 2, posX + anchoCaja - 2, posY + altoCaja - 2);
+  p.line(posX + anchoCaja - 2, posY + 1, posX + anchoCaja - 2, posY + altoCaja - 2);
 
-    // Subtitle
-    p.textSize(14);
-    p.fill(176, 168, 203, opacidadPopup); // Muted text
-    p.textStyle(p.NORMAL);
-    p.text(
-      ganador ? ganador.resultado : "",
-      centroX,
-      posY + 120,
-    );
+  // Ultimate Shadow Outer Bottom and Right edges (Black)
+  p.stroke(10, 10, 10, opacidadPopup);
+  p.line(posX, posY + altoCaja - 1, posX + anchoCaja - 1, posY + altoCaja - 1);
+  p.line(posX + anchoCaja - 1, posY, posX + anchoCaja - 1, posY + altoCaja - 1);
 
-    // Fake Button (Neon style)
-    p.fill(236, 72, 153, opacidadPopup); // Pink button background
-    p.rect(centroX - 90, posY + 155, 180, 40, 20);
-    p.fill(255, 255, 255, opacidadPopup);
-    p.textSize(14);
-    p.textStyle(p.BOLD);
-    p.text("JUGAR AHORA", centroX, posY + 175);
-
-    p.pop();
+  // 4. Windows 98 Titlebar (Gradient Blue)
+  let marginTitle = 4;
+  let altoTitlebar = 20;
+  p.noStroke();
+  // Simulating the 90s gradient (Active window color)
+  for (let i = 0; i < (anchoCaja - marginTitle * 2); i++) {
+    let inter = p.map(i, 0, anchoCaja - marginTitle * 2, 0, 1);
+    let c = p.lerpColor(p.color(0, 0, 128), p.color(16, 132, 208), inter);
+    p.stroke(c);
+    p.line(posX + marginTitle + i, posY + marginTitle, posX + marginTitle + i, posY + marginTitle + altoTitlebar);
   }
+
+  // Titlebar Text
+  p.noStroke();
+  p.fill(255, 255, 255, opacidadPopup);
+  p.textSize(11);
+  p.textStyle(p.BOLD);
+  p.textAlign(p.LEFT, p.CENTER);
+  p.text("¡Premio Obtenido!", posX + marginTitle + 6, posY + marginTitle + altoTitlebar / 2);
+
+  // 5. Text Contents & Internal Styling
+  p.textAlign(p.CENTER, p.CENTER);
+  
+  // Badge (Flat Slate Gray Inset Badge)
+  let badgeY = posY + 45;
+  p.fill(128, 128, 128, opacidadPopup);
+  p.rect(centroX - 60, badgeY, 120, 20); // Sharp rectangle
+  p.fill(255, 255, 255, opacidadPopup);
+  p.textSize(11);
+  p.textStyle(p.BOLD);
+  p.text("JUGÁS POR:", centroX, badgeY + 10);
+
+  // Title (Win98 System text style)
+  p.fill(0, 0, 0, opacidadPopup);
+  p.textSize(24);
+  p.textStyle(p.BOLD);
+  p.text(ganador ? ganador.etiqueta : "", centroX, posY + 100);
+
+  // Subtitle
+  p.textSize(12);
+  p.textStyle(p.NORMAL);
+  p.text(ganador ? ganador.resultado : "", centroX, posY + 140);
+
+  // 6. Windows 3D Command Button (Replaces the pink rounded neon button)
+  let btnW = 140;
+  let btnH = 28;
+  let btnX = centroX - btnW / 2;
+  let btnY = posY + 180;
+
+  // Button Face
+  p.fill(192, 192, 192, opacidadPopup);
+  p.noStroke();
+  p.rect(btnX, btnY, btnW, btnH);
+
+  // Button 3D Borders
+  p.strokeWeight(1);
+  // Highlight
+  p.stroke(255, 255, 255, opacidadPopup);
+  p.line(btnX, btnY, btnX + btnW - 1, btnY);
+  p.line(btnX, btnY, btnX, btnY + btnH - 1);
+  // Shadow
+  p.stroke(128, 128, 128, opacidadPopup);
+  p.line(btnX + 1, btnY + btnH - 2, btnX + btnW - 2, btnY + btnH - 2);
+  p.line(btnX + btnW - 2, btnY + 1, btnX + btnW - 2, btnY + btnH - 2);
+  // Black Outer Shadow
+  p.stroke(10, 10, 10, opacidadPopup);
+  p.line(btnX, btnY + btnH - 1, btnX + btnW - 1, btnY + btnH - 1);
+  p.line(btnX + btnW - 1, btnY, btnX + btnW - 1, btnY + btnH - 1);
+
+  // Button Interactive Focus Indicator (The classic dotted rect interior)
+  p.stroke(0, 0, 0, opacidadPopup * 0.4);
+  p.drawingContext.setLineDash([1, 2]); // Native canvas dotted pattern simulation
+  p.noFill();
+  p.rect(btnX + 3, btnY + 3, btnW - 6, btnH - 6);
+  p.drawingContext.setLineDash([]); // Reset line dash pattern
+
+  // Button Label
+  p.noStroke();
+  p.fill(0, 0, 0, opacidadPopup);
+  p.textSize(12);
+  p.textStyle(p.BOLD);
+  p.textAlign(p.CENTER, p.CENTER);
+  p.text("ACEPTAR", centroX, btnY + btnH / 2);
+
+  p.pop();
+}
+
 
   p.mousePressed = function () {
 

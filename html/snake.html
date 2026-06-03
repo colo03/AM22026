@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake - Juego</title>
-    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="stylesheet" href="../estilo/estiloJuegos.css">
     <style>
         .game-page-container {
             display: flex;
@@ -43,7 +43,12 @@
     </style>
 </head>
 <body>
-    <div id="scoreBoard">Score: 0</div>
+
+        <div class="top-banner-wrapper">
+            <div class="top-banner-body">
+            <img src="/recursos/snakeBanner.png" id="top-banner-img" alt="" />
+    </div>
+    <div id="scoreBoard">Dinero: $0</div>
     
     <div class="game-page-container">
         <div class="game-header">
@@ -82,5 +87,28 @@
 
     <script src="../games/snake.js"></script>
     <script src="../js/popup.js" defer></script>
+
+        <div id="bannerCompleto">
+        <script>window.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth" // Smooth scrolling animation
+                });
+            }, 2000); // 
+            });
+        </script>
+        <script src="/js/banner.js"></script>
+        <div class="banner-wrapper">
+            <div class="banner-titlebar">
+            <span>publi</span>
+            <span class="banner-close" onclick="spawnNewBanner()">X</span>
+            </div>
+        <div class="banner-body">
+            <a href="#" id="banner-link" target="_blank" rel="noopener noreferrer">
+            <img src="" id="banner-img" alt="Net Art Advertisement" width="468" height="60" />
+        </a>
+        </div>
+    </div>
 </body>
 </html>

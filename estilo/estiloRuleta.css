@@ -1,0 +1,174 @@
+/* ==========================================
+   WINDOWS 98 CORE DESKTOP ENVIRONMENT
+   ========================================== */
+
+@font-face {
+    /* Falling back to Tahoma/Arial if MS Sans Serif isn't system-installed */
+    font-family: 'Win98';
+    src: local('MS Sans Serif'), local('Tahoma'), local('Arial');
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Win98', Tahoma, Arial, sans-serif;
+    font-size: 12px;
+    color: #000000;
+    image-rendering: pixelated; /* Keeps retro images crisp */
+}
+
+body {
+    background-color: #008080; /* Classic Desktop Teal */
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* Page Setup */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* ==========================================
+   THE 3D BEVELS (The Secret Sauce)
+   ========================================== */
+.window-style {
+    background-color: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: inset 1px 1px 0px #ffffff, inset -1px -1px 0px #0a0a0a;
+    padding: 3px;
+}
+
+.inset-style {
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    background-color: #ffffff;
+}
+
+/* ==========================================
+   COMPONENTS
+   ========================================== */
+
+/* Game Canvas & Top Banner Container */
+.top-banner-wrapper, 
+.game-canvas-wrapper {
+    background-color: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: inset 1px 1px 0px #ffffff, inset -1px -1px 0px #0a0a0a;
+    padding: 6px;
+    margin-bottom: 10px;
+}
+
+.top-banner-body {
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    background: #000;
+    display: flex;
+    justify-content: center;
+}
+
+#top-banner-img {
+    max-width: 100%;
+    display: block;
+}
+
+/* T&C Link */
+.nav-link {
+    color: #0000ee;
+    text-decoration: underline;
+}
+.nav-link:visited {
+    color: #551a8b;
+}
+
+/* ==========================================
+   THE AD BANNER (Turned into a Mini Window)
+   ========================================== */
+#bannerCompleto {
+    margin-top: 20px;
+}
+
+.banner-wrapper {
+    background-color: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: inset 1px 1px 0px #ffffff, inset -1px -1px 0px #0a0a0a;
+    padding: 3px;
+    width: 480px;
+}
+
+.banner-titlebar {
+    background: linear-gradient(90deg, #000080, #1084d0);
+    padding: 3px 4px 3px 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.banner-titlebar span {
+    color: #ffffff;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.banner-close {
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 0px 4px;
+    cursor: pointer;
+    line-height: 11px;
+}
+
+.banner-close:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+    padding: 1px 3px 0px 5px;
+}
+
+.banner-body {
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    margin-top: 4px;
+    background-color: #ffffff;
+    overflow: hidden;
+    display: flex;
+}
+
+/* ==========================================
+   CAREFUL MODAL OVERLAYS!!
+   ========================================== */
+
+/* The backdrop strictly covers the whole viewport and intercepts clicks */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.15); /* Subtle dimming, letting desktop show */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Keeps it strictly above everything else */
+}
+
+/* The structural modal wrapper acts as a Dialog Box */
+.modal-popup {
+    background-color: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: inset 1px 1px 0px #ffffff, inset -1px -1px 0px #0a0a0a;
+    padding: 3px;
+    width: 320px;
+    animation: none; /* No modern transitions permitted */
+}
+
+/* Simulating a dialog content zone */
+.modal-content {
+    padding:

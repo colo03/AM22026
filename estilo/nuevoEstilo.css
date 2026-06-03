@@ -1,0 +1,539 @@
+:root {
+  /* Classic 90s cyber/web palette */
+  --bg: #008080; /* Classic Win95 Teal */
+  --surface: #c0c0c0; /* Classic metallic gray */
+  --surface-soft: #ffffff;
+  --text: #000000;
+  --muted: #808080;
+  --accent: #0000ff; /* Pure Blue Link color */
+  --accent-strong: #ff00ff; /* Fuchsia */
+  --glow-cyan: #00ffff; /* Cyber Cyan */
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  /* Times New Roman / MS Sans Serif feel */
+  font-family: 'Times New Roman', Times, serif;
+  /* Retro starry/cyber space background or repeating pattern fallback */
+  background: #000033;
+  background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
+  background-size: 240px 240px;
+  background-position: 0 0, 120px 120px;
+  color: #ffffff; /* Text defaults to bright white on space bg */
+}
+
+.page-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  color: #ffff00; /* Neon yellow headers */
+  letter-spacing: 0.05em;
+  margin: 0;
+  font-weight: 900;
+  /* Heavy word-art style shadow */
+  text-shadow: 3px 3px 0px #ff00ff, 6px 6px 0px #000000;
+}
+
+.subtitle {
+  margin: 0.6rem 0 1.8rem;
+  color: #00ffff;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.game-canvas-wrapper {
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto 2rem;
+  /* Retro CRT/Beveled framing */
+  border: 4px inset #ffffff;
+  background: #000;
+}
+
+canvas {
+  display: block;
+}
+
+/* Win95 System style buttons */
+.btn {
+  border: 3px solid;
+  border-color: #fff #0a0a0a #0a0a0a #fff; /* Beveled edge effect */
+  border-radius: 0; /* No round corners in the 90s! */
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  transition: none; /* Instant feedback */
+  outline: 1px dashed black;
+  outline-offset: -4px;
+}
+
+.btn:active, .btn:hover {
+  /* Push-down effect */
+  border-color: #0a0a0a #fff #fff #0a0a0a;
+  transform: translate(1px, 1px);
+}
+
+.btn-primary {
+  background: #c0c0c0;
+  color: #000000;
+}
+
+.btn-secondary {
+  background: #808080;
+  color: #ffffff;
+  outline: 1px dashed white;
+}
+
+.nav-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #00ffff;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.nav-link:hover {
+  color: #ff00ff;
+  background: #ffff00;
+}
+
+/* Desktop-in-a-browser Shell */
+.terms-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: #008080; /* Classic Windows Desktop Teal */
+}
+
+/* Gray Window Dialog Box */
+.terms-card {
+  width: min(100%, 960px);
+  background: #c0c0c0; /* Solid classic gray */
+  border: 3px solid;
+  border-color: #fff #0a0a0a #0a0a0a #fff;
+  border-radius: 0; /* Square edges */
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.5);
+  backdrop-filter: none;
+  padding: 1.5rem;
+  color: #000000;
+}
+
+/* Windows Title Bar simulation */
+.terms-header {
+  margin-bottom: 1.4rem;
+  background: linear-gradient(90deg, #000080, #1084d0); /* Classic Blue Titlebar */
+  padding: 0.5rem;
+  text-align: left;
+  border: 1px solid #fff;
+}
+
+.terms-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-shadow: none;
+  font-family: Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+.terms-header p {
+  margin: 0;
+  color: #ffff00;
+  line-height: 1.4;
+  font-size: 0.9rem;
+}
+
+/* White Text Field Area */
+.terms-content {
+  max-height: 55vh;
+  overflow-y: scroll; /* Force classic gray scrollbars */
+  padding: 1rem;
+  margin-bottom: 1.75rem;
+  scroll-behavior: auto;
+  background: #ffffff;
+  border: 3px inset #808080;
+  color: #000000;
+  text-align: left;
+}
+
+/* Classic scrollbars */
+.terms-content::-webkit-scrollbar {
+  width: 16px;
+  background: #dfdfdf;
+}
+
+.terms-content::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #fff #0a0a0a #0a0a0a #fff;
+  border-radius: 0;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  margin: 1.2rem 0 0.5rem;
+  color: #000080;
+  text-transform: none;
+  font-weight: bold;
+  border-bottom: 2px silver double;
+  letter-spacing: 0;
+}
+
+.section-text {
+  margin: 0.85rem 0;
+  color: #000000;
+  line-height: 1.5;
+  font-family: 'Times New Roman', serif;
+}
+
+.checkbox-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 1rem;
+  color: #000000;
+  font-weight: bold;
+}
+
+.checkbox-label input {
+  width: 1.2rem;
+  height: 1.2rem;
+  accent-color: initial; /* Fallback to standard native browser inputs */
+}
+
+.terms-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.terms-actions button {
+  min-width: 180px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 1 !important;
+  color: #808080 !important;
+  text-shadow: 1px 1px 0px #fff; /* Classic Windows grayed-out text */
+  background: #c0c0c0 !important;
+  border-color: #fff #0a0a0a #0a0a0a #fff !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+button.enabled {
+  animation: blinker 1s linear infinite; /* 90s blinking emphasis! */
+}
+
+@keyframes blinker {
+  50% { border-color: #ff00ff #0a0a0a #0a0a0a #ff00ff; }
+}
+
+/* Overlay Popups */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h2v2H0V0zm2 2h2v2H2V2z' fill='%23000' fill-opacity='.7' fill-rule='evenodd'/%3E%3C/svg%3E"); /* Classic pixel dither shade grid */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.modal-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-popup {
+  width: min(100%, 480px);
+  background: #c0c0c0;
+  border: 3px solid;
+  border-color: #fff #0a0a0a #0a0a0a #fff;
+  border-radius: 0;
+  box-shadow: 10px 10px 0px #000000;
+  backdrop-filter: none;
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem;
+}
+
+/* Strip out modern gradient highlights */
+.modal-popup::before {
+  display: none;
+}
+
+.modal-content {
+  position: relative;
+  z-index: 1;
+  color: #000000;
+}
+
+.badge {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0;
+  background: #000080;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
+}
+
+.modal-content h2 {
+  margin: 0 0 0.8rem;
+  font-size: 2.2rem;
+  line-height: 1.1;
+  color: #ff0000; /* Bright red alert headers */
+  text-shadow: none;
+}
+
+.modal-content p {
+  margin: 0 0 1.8rem;
+  color: #000;
+  font-weight: bold;
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  justify-content: center;
+}
+
+/* Neon Cyber-button style */
+.neon-button {
+  background: #00ffff;
+  color: #000000;
+  border: 3px outset #ffffff;
+  box-shadow: none;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.neon-button:hover {
+  background: #ff00ff;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+/* Prize Form Styles (Geocities/Cyber Theme) */
+.prize-card {
+  width: min(100%, 600px);
+  background: #000000; /* Cyber black box */
+  border: 4px double #ff00ff;
+  border-radius: 0;
+  box-shadow: 0 0 20px #8b5cf6;
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+.prize-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.prize-header h1 {
+  margin: 0.5rem 0 0.8rem;
+  font-size: 3rem;
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  background-clip: initial;
+  color: #00ff00; /* Matrix green tech text */
+  text-shadow: 2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.prize-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.form-group label {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #00ffff;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* High contrast inputs */
+.form-group input {
+  padding: 0.6rem;
+  background: #ffffff;
+  border: 3px inset #808080;
+  border-radius: 0;
+  color: #000000;
+  font-size: 1rem;
+  transition: none;
+  font-family: Arial, sans-serif;
+}
+
+.form-group input::placeholder {
+  color: #666666;
+}
+
+.form-group input:focus {
+  outline: 2px solid #ff00ff;
+  background: #ffffcc; /* Classic input focus tint */
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.form-actions button {
+  flex: 1;
+  min-width: 140px;
+}
+
+/* Responsiveness tweaks for the old layouts */
+@media (max-width: 720px) {
+  .terms-card {
+    padding: 1rem;
+    border-width: 2px;
+  }
+
+  .terms-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modal-popup {
+    width: 100%;
+    max-width: 440px;
+    padding: 1rem;
+    box-shadow: 5px 5px 0px #000000;
+  }
+
+  .modal-content h2 {
+    font-size: 1.8rem;
+  }
+
+  .prize-card {
+    padding: 1rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   banners
+   ========================================================================== */
+.banner-wrapper {
+    width: fit-content;
+    height: fit-content;
+    max-width: 95vw;
+    margin: 3rem auto 1rem;
+    background: #c0c0c0;
+    border: 3px solid;
+    border-color: #fff #0a0a0a #0a0a0a #fff;
+    padding: 2px;
+    box-shadow: 4px 4px 0px #000000;
+}
+
+.banner-titlebar {
+    background: #808080;
+    color: #dfdfdf;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #0a0a0a;
+}
+
+.banner-close {
+    cursor: pointer;
+    border: 1px solid #fff;
+    padding: 0 3px;
+    background: #c0c0c0;
+    color: #000;
+    }
+
+.banner-body {
+    background: #00000000;
+    border: 3px inset #808080;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#banner-img {
+    display: block;
+    image-rendering: crisp-edges; 
+    max-width: 100%;
+    width: auto;
+    height: auto
+
+}
+
+/* ==========================================================================
+   RETRO TOP HEADER BANNER
+   ========================================================================== */
+.top-banner-wrapper {
+  width: fit-content;   /* Shrinks frame horizontally to tightly fit your PNG */
+  max-width: 95vw;      /* Prevents clipping on narrow browser screens */
+  margin: 1rem auto 2rem; /* Centers it with space below it */
+
+}
+
+.top-banner-titlebar {
+
+}
+
+.top-banner-body {
+  background: #000000;
+  border: 3px inset #808080;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#top-banner-img {
+  display: block;
+  image-rendering: pixelated; /* Keeps your custom PNG crisp if the browser scales it */
+  width: 700px;
+  height: auto;
+ 
+}

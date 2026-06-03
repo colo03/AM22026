@@ -49,7 +49,7 @@ function update() {
 
 function updateScore() {
   const scoreBoard = document.getElementById("scoreBoard");
-  if (scoreBoard) scoreBoard.innerText = `Jugador: ${pScore} - Máquina: ${aiScore}`;
+  if (scoreBoard) scoreBoard.innerText = `Multiplicador de dinero: x${pScore} - Pierdes: x${aiScore}`;
 }
 
 function draw() {

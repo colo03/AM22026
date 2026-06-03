@@ -47,7 +47,7 @@ function update() {
   // Food collision
   if (head.x === food.x && head.y === food.y) {
     score += 10;
-    document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+    document.getElementById("scoreBoard").innerText = `Dinero: $${score}`;
     resetFood();
   } else {
     snake.pop(); // Remove tail if no food eaten
@@ -113,7 +113,7 @@ function start() {
   dx = 0;
   dy = -gridSize;
   score = 0;
-  document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+  document.getElementById("scoreBoard").innerText = `Dinero: $${score}`;
   resetFood();
   gameStarted = true;
   clearInterval(gameInterval);

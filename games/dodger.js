@@ -38,7 +38,7 @@ function update() {
   blocks = blocks.filter(b => b.y < canvas.height);
   score++;
   if (frameCount % 10 === 0 && document.getElementById("scoreBoard")) {
-    document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+    document.getElementById("scoreBoard").innerText = `Dinero: $${score}`;
   }
   
   draw();
@@ -93,7 +93,7 @@ function gameOver(won = false) {
 function start() {
   pX = (canvas.width - pS) / 2;
   score = 0; blocks = []; frameCount = 0;
-  if (document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+  if (document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Dinero: $${score}`;
   gameStarted = true;
   clearInterval(gameInterval);
   gameInterval = setInterval(update, 20);

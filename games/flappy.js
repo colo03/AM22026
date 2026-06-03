@@ -30,7 +30,7 @@ function update() {
     if (p.x < birdX && !p.passed) {
       score += 10;
       const sb = document.getElementById("scoreBoard");
-      if(sb) sb.innerText = `Score: ${score}`;
+      if(sb) sb.innerText = `Dinero: $${score}`;
       p.passed = true;
     }
   }
@@ -98,7 +98,7 @@ function gameOver(won = false) {
 
 function start() {
   birdY = 200; birdVel = 0; score = 0; frameCount = 0; pipes = [];
-  if(document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+  if(document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Dinero: $${score}`;
   gameStarted = true;
   clearInterval(gameInterval);
   gameInterval = setInterval(update, 20);

@@ -26,7 +26,7 @@ function update() {
     // Catch condition
     if (it.y + it.s >= pY && it.y <= pY + pH && it.x + it.s >= pX && it.x <= pX + pW) {
       score += 10;
-      if(document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+      if(document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Dinero: $${score}`;
       items.splice(i, 1);
       i--;
       if (score % 50 === 0) { dropSpeed += 0.5; spawnRate = Math.max(20, spawnRate - 5); }
@@ -67,7 +67,7 @@ function gameOver(won = false) {
   if (won) {
     ctx.fillText("¡Ganaste!", canvas.width / 2, canvas.height / 2 - 10);
     ctx.font = "14px sans-serif";
-    ctx.fillText("Score: " + score, canvas.width / 2, canvas.height / 2 + 20);
+    ctx.fillText("Dinero: $" + score, canvas.width / 2, canvas.height / 2 + 20);
     setTimeout(() => window.location.href = "prize.html", 2000);
   } else {
     ctx.fillText("Perdiste!", canvas.width / 2, canvas.height / 2 - 10);
@@ -81,7 +81,7 @@ function gameOver(won = false) {
 function start() {
   pX = (canvas.width - pW) / 2;
   score = 0; items = []; dropSpeed = 3; spawnRate = 60; frameCount = 0;
-  if(document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+  if(document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Dinero: $${score}`;
   gameStarted = true;
   clearInterval(gameInterval);
   gameInterval = setInterval(update, 20);

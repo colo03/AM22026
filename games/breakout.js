@@ -53,7 +53,7 @@ function update() {
               
           score += 10;
           const sb = document.getElementById("scoreBoard");
-          if (sb) sb.innerText = `Score: ${score}`;
+          if (sb) sb.innerText = `Dinero: $${score}`;
         }
       }
     }
@@ -129,7 +129,7 @@ function start() {
   x = canvas.width / 2; y = canvas.height - 30;
   dx = 4; dy = -4; paddleX = (canvas.width - paddleW) / 2;
   score = 0; initBricks();
-  if(document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Score: ${score}`;
+  if(document.getElementById("scoreBoard")) document.getElementById("scoreBoard").innerText = `Dinero: $${score}`;
   gameStarted = true;
   clearInterval(gameInterval);
   gameInterval = setInterval(update, 20);

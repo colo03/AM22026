@@ -1,0 +1,306 @@
+/* --- Windows 98 System Globals --- */
+:root {
+  --win-bg: #008080;      /* Desktop Teal */
+  --win-face: #c0c0c0;    /* Classic Gray Window Face */
+  --win-shadow: #808080;  /* Dark Gray Shadow */
+  --win-highlight: #ffffff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--win-bg);
+  font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
+  font-size: 12px;
+  color: #000000;
+  min-height: 100vh;
+  image-rendering: pixelated;
+}
+
+/* --- App Layout Shell --- */
+.game-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Main Application Window Container */
+.game-header {
+  background-color: var(--win-face);
+  border: 2px solid;
+  border-color: var(--win-highlight) var(--win-shadow) var(--win-shadow) var(--win-highlight);
+  padding: 3px;
+  width: 412px;
+  box-shadow: 1px 1px 0 0 #000000;
+  text-align: left;
+  margin-bottom: 0px;
+  box-sizing: border-box;
+}
+
+/* Application Title Bar */
+.game-header h1 {
+  margin: 0;
+  background: linear-gradient(90deg, #000080, #1084d0); /* Classic Windows Blue */
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 3px 5px;
+  letter-spacing: 0;
+}
+
+/* Help text under the application title bar */
+.game-header p {
+  margin: 0;
+  padding: 6px;
+  background-color: var(--win-face);
+  color: #000000;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* --- Game Canvas Viewport --- */
+#gameCanvas {
+  background-color: #000000;
+  border: 3px solid;
+  border-color: var(--win-shadow) var(--win-highlight) var(--win-highlight) var(--win-shadow);
+  box-shadow: inset 1px 1px 0 #000000;
+  border-radius: 0 !important; /* Forces removal of neon rounded design */
+  display: block;
+}
+
+/* Scoreboard styled like an operational Status Bar */
+#scoreBoard {
+  position: static !important; /* Overrides absolute positioning from old inline style */
+  margin-top: 4px;
+  width: 412px;
+  background-color: var(--win-face);
+  border: 2px solid;
+  border-color: var(--win-shadow) var(--win-highlight) var(--win-highlight) var(--win-shadow);
+  padding: 3px 6px;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: bold;
+  color: #000000;
+  text-shadow: none !important;
+  box-sizing: border-box;
+}
+
+/* --- FIXED: Modal Overlay Architecture --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 9999;
+  
+  /* Restoring your JS event controls */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease-in-out;
+}
+
+/* When popup.js adds .visible, the Windows Dialog appears instantly */
+.modal-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* The Modal Dialog Window Frame */
+.modal-popup {
+  background-color: var(--win-face);
+  border: 2px solid;
+  border-color: var(--win-highlight) var(--win-shadow) var(--win-shadow) var(--win-highlight);
+  box-shadow: 1px 1px 0 0 #000000;
+  width: 330px;
+  padding: 3px;
+  position: relative;
+  border-radius: 0 !important;
+}
+
+/* Clean up fake decorative background elements from modern CSS */
+.modal-popup::before {
+  display: none !important;
+}
+
+/* Dialog Banner (Acts as window header title) */
+.modal-content {
+  color: #000000;
+  text-align: left;
+}
+
+.modal-content::before {
+  content: "🎰 System Message";
+  display: block;
+  background: linear-gradient(90deg, #000080, #1084d0);
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 3px 5px;
+  margin-bottom: 12px;
+}
+
+.modal-content h2 {
+  font-size: 13px;
+  font-weight: bold;
+  margin: 10px 5px;
+  text-shadow: none !important;
+  color: #000000;
+}
+
+.modal-content p {
+  font-size: 12px;
+  margin: 10px 5px 15px 5px;
+  line-height: 1.4;
+  color: #000000;
+}
+
+/* Info Icon Box Component */
+.badge {
+  display: inline-block;
+  background: var(--win-face);
+  color: #000000;
+  padding: 2px 6px;
+  font-size: 10px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  border: 1px inset var(--win-highlight);
+  border-radius: 0 !important;
+  text-transform: uppercase;
+}
+
+/* --- Retro Buttons --- */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 5px;
+}
+
+.btn {
+  background-color: var(--win-face) !important;
+  font-family: "MS Sans Serif", Tahoma, Arial, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: normal !important;
+  color: #000000 !important;
+  padding: 4px 14px !important;
+  border: 2px solid !important;
+  border-color: var(--win-highlight) var(--win-shadow) var(--win-shadow) var(--win-highlight) !important;
+  box-shadow: 1px 1px 0 0 #000000 !important;
+  border-radius: 0 !important;
+  cursor: pointer;
+  transform: none !important;
+  transition: none !important;
+}
+
+.btn:hover {
+  transform: none !important;
+  background-color: var(--win-face) !important;
+}
+
+.btn:focus {
+  outline: 1px dashed #000000 !important;
+  outline-offset: -4px;
+}
+
+/* Gives the classic physical "clicked button" drop */
+.btn:active {
+  border-color: var(--win-shadow) var(--win-highlight) var(--win-highlight) var(--win-shadow) !important;
+  box-shadow: none !important;
+  padding: 5px 13px 3px 15px !important;
+}
+
+/* Eliminate leftover gradient overrides from classes */
+.neon-button, .btn-secondary {
+  background: var(--win-face) !important;
+  color: #000000 !important;
+}
+
+/* ==========================================================================
+   RETRO TOP HEADER BANNER
+   ========================================================================== */
+.top-banner-wrapper {
+  width: fit-content;   /* Shrinks frame horizontally to tightly fit your PNG */
+  max-width: 95vw;      /* Prevents clipping on narrow browser screens */
+  margin: 1rem auto 2rem; /* Centers it with space below it */
+
+}
+
+.top-banner-titlebar {
+
+}
+
+.top-banner-body {
+  background: #000000;
+  border: 3px inset #808080;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#top-banner-img {
+  display: block;
+  image-rendering: pixelated; /* Keeps your custom PNG crisp if the browser scales it */
+  width: 700px;
+  height: auto;
+ 
+}/* ==========================================================================
+   banners
+   ========================================================================== */
+.banner-wrapper {
+    width: fit-content;
+    height: fit-content;
+    max-width: 95vw;
+    margin: 3rem auto 1rem;
+    background: #c0c0c0;
+    border: 3px solid;
+    border-color: #fff #0a0a0a #0a0a0a #fff;
+    padding: 2px;
+    box-shadow: 4px 4px 0px #000000;
+}
+
+.banner-titlebar {
+    background: #808080;
+    color: #dfdfdf;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #0a0a0a;
+}
+
+.banner-close {
+    cursor: pointer;
+    border: 1px solid #fff;
+    padding: 0 3px;
+    background: #c0c0c0;
+    color: #000;
+    }
+
+.banner-body {
+    background: #00000000;
+    border: 3px inset #808080;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#banner-img {
+    display: block;
+    image-rendering: crisp-edges; 
+    max-width: 100%;
+    width: auto;
+    height: auto
+
+}
