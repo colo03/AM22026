@@ -537,3 +537,128 @@ button.enabled {
   height: auto;
  
 }
+
+/* ==========================================================================
+   WIN98 EXTENSIONS FOR THE PRIZE RECLAIM FORM
+   ========================================================================== */
+
+/* Overwriting the cyber black container into a Solid Windows 98 Dialog Box */
+.prize-card {
+  width: min(100%, 600px);
+  background: #c0c0c0 !important; /* Forces standard metallic window face gray */
+  border: 3px solid !important;
+  border-color: #ffffff #0a0a0a #0a0a0a #ffffff !important; /* 3D pop-out border */
+  border-radius: 0 !important;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5) !important; /* Solid block shadow */
+  padding: 4px !important; /* Tight spacing layout */
+  margin: 2rem auto;
+}
+
+/* Transforming the Header into a Blue Desktop Title Bar Frame */
+.prize-header {
+  background: linear-gradient(90deg, #000080, #1084d0); /* Classic active title gradient */
+  padding: 4px 6px 6px 6px;
+  text-align: left !important; /* System windows align headers left */
+  margin-bottom: 1.5rem !important;
+  border: 1px solid #ffffff;
+}
+
+/* Modifying typography inside the header frame */
+.prize-header h1 {
+  font-size: 1.3rem !important;
+  color: #ffffff !important; /* Hard system white */
+  font-family: Arial, sans-serif !important;
+  font-weight: bold !important;
+  letter-spacing: 0 !important;
+  text-shadow: none !important; /* Wipes out the heavy word-art blur */
+  margin: 0 !important;
+  display: inline-block;
+}
+
+/* Adjusting the subtitle to read like basic help hints */
+.prize-header .subtitle {
+  margin: 4px 0 0 0 !important;
+  color: #ffff00 !important; /* System warning yellow */
+  font-size: 0.85rem !important;
+  font-family: Arial, sans-serif !important;
+  font-weight: normal !important;
+}
+
+/* Form group structural components */
+.prize-form {
+  padding: 12px;
+  background: #c0c0c0;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+/* Fixing Input Labels to look like standard Windows text */
+.form-group label {
+  font-family: Arial, sans-serif !important;
+  font-size: 0.9rem !important;
+  color: #000000 !important; /* Crisp system black */
+  margin-bottom: 3px;
+}
+
+/* Native-styled Input Boxes with deep 3D inset borders */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4px 6px !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-family: 'Times New Roman', Times, serif !important; /* Old system form field style */
+  font-size: 0.95rem !important;
+  border: 2px solid !important;
+  border-color: #808080 #ffffff #ffffff #808080 !important; /* Dark top/left, white bottom/right */
+  box-shadow: inset 1px 1px 0px #0a0a0a !important; /* Extra depth step */
+  border-radius: 0 !important;
+}
+
+/* Safe overlay focus parameters */
+.form-group input:focus {
+  outline: none !important;
+  background: #ffffff !important; /* Removes the cyber yellow glare tint */
+  border-color: #0a0a0a #dfdfdf #dfdfdf #0a0a0a !important;
+}
+
+/* Neutralizing the checkbox labels */
+.checkbox-label {
+  font-family: Arial, sans-serif !important;
+  font-size: 0.9rem !important;
+  color: #000000 !important;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 13px !important;
+  height: 13px !important;
+  margin: 0 4px 0 0;
+  vertical-align: middle;
+}
+
+/* Aligning the action tray button row */
+.form-actions {
+  margin-top: 1.5rem !important;
+  gap: 8px !important;
+}
+
+/* Resetting the main submit button away from neon fuchsia/cyan */
+.form-actions .btn.neon-button {
+  background: #c0c0c0 !important;
+  color: #000000 !important;
+  font-family: Arial, sans-serif !important;
+  font-size: 0.9rem !important;
+  border: 3px solid !important;
+  border-color: #ffffff #0a0a0a #0a0a0a #ffffff !important;
+  box-shadow: none !important;
+}
+
+.form-actions .btn.neon-button:active {
+  border-color: #0a0a0a #ffffff #ffffff #0a0a0a !important;
+  padding: 0.65rem 1.45rem 0.55rem 1.55rem !important; /* Pushes text matrix down 1px */
+}

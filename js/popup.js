@@ -35,27 +35,55 @@ const casinoMessages = [
 
 // Función encargada de abrir una ventana emergente REAL (nueva ventana del navegador)
 const openRealPopup = (title, text) => {
-  // Calculamos una posición aleatoria (left y top) para que las ventanas aparezcan dispersas por toda la pantalla
   const winLeft = Math.random() * 400 + 100;
   const winTop = Math.random() * 300 + 100;
   
-  // Abrimos la nueva ventana sin barra de herramientas ni menú para que parezca más un anuncio
-  const popupWin = window.open("", "_blank", `width=480,height=320,left=${winLeft},top=${winTop},toolbar=no,menubar=no`);
+  // Outer window size (slightly larger to leave a space margin around the box)
+  const popupWin = window.open("", "_blank", `width=440,height=240,left=${winLeft},top=${winTop},toolbar=no,menubar=no`);
   
   if (popupWin) {
-      // Determinamos la ruta base dependiendo de si estamos en la carpeta /html/ o en la raíz
       const baseUrl = window.location.href.includes('/html/') ? '../index.html' : 'index.html';
       
-      // Inyectamos el diseño HTML y CSS directamente en la nueva ventana
-      popupWin.document.title = title;
+      popupWin.document.title = "System Message";
       popupWin.document.body.style.margin = "0";
+      popupWin.document.body.style.padding = "0";
+      
+      // 1. REUSING THE BACKGROUND: Replicated the exact CSS starry space styles 
+      popupWin.document.body.style.background = "#000033";
+      popupWin.document.body.style.backgroundImage = `
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px)
+      `;
+      popupWin.document.body.style.backgroundSize = "240px 240px";
+      popupWin.document.body.style.backgroundPosition = "0 0, 120px 120px";
+      
+      // Full screen flex layout to keep the dialog window centered
+      popupWin.document.body.style.height = "100vh";
+      popupWin.document.body.style.display = "flex";
+      popupWin.document.body.style.alignItems = "center";
+      popupWin.document.body.style.justifyContent = "center";
+      popupWin.document.body.style.overflow = "hidden";
+      
+      // 2. SMALL BOX: Constrained container acting as the standalone popup window
       popupWin.document.write(`
-          <div style="background: #0b0918; color: #f9f4ff; font-family: sans-serif; text-align: center; padding: 2rem; height: 100vh; box-sizing: border-box;">
-              <h2 style="color: #ec4899; text-shadow: 0 0 18px rgba(223, 82, 255, 0.3); margin-top: 0;">${title}</h2>
-              <p style="color: #b0a8cb; font-size: 1.2rem;">${text}</p>
-              <!-- El botón de Jugar redirige a la ruleta en la ventana original y cierra el popup -->
-              <button onclick="if(window.opener) { window.opener.location.href='${baseUrl}'; } window.close()" style="background: linear-gradient(135deg, #ec4899, #8b5cf6, #22d3ee); color: white; border: none; padding: 12px 24px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 20px;">JUGAR MÁS</button>
-              <button onclick="window.close()" style="background: #333; color: white; border: none; padding: 12px 24px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 20px; margin-left: 10px;">CERRAR</button>
+          <div style="width: 400px; height: 180px; box-sizing: border-box; font-family: Tahoma, Arial, sans-serif; background: #c0c0c0; color: #000000; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.7), inset 1px 1px 0px #ffffff, inset -1px -1px 0px #0a0a0a; display: flex; flex-direction: column; padding: 3px;">
+              
+              <div style="background: linear-gradient(90deg, #000080, #1084d0); padding: 3px 4px 3px 6px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #ffffff;">
+                  <span style="color: #ffffff; font-weight: bold; font-size: 11px; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 340px;">${title}</span>
+                  <div onclick="window.close()" style="background: #c0c0c0; border: 1px solid; border-color: #ffffff #808080 #808080 #ffffff; font-size: 9px; font-weight: bold; padding: 0px 4px; cursor: pointer; line-height: 11px; color: #000000;">X</div>
+              </div>
+              
+              <div style="padding: 12px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                  <p style="margin: 0 0 10px 0; font-size: 12px; line-height: 1.4; color: #000000; font-weight: normal; text-align: left;">${text}</p>
+                  
+                  <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: auto;">
+                      
+                      <button onclick="if(window.opener) { window.opener.location.href='${baseUrl}'; } window.close()" style="background: #c0c0c0; color: #000000; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; box-shadow: inset 1px 1px 0px #ffffff; padding: 4px 14px; cursor: pointer; font-family: Tahoma, Arial, sans-serif; font-size: 11px; font-weight: bold; outline: 1px dotted #000000; outline-offset: -4px;">JUGAR MÁS</button>
+                      
+                      <button onclick="window.close()" style="background: #c0c0c0; color: #000000; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; box-shadow: inset 1px 1px 0px #ffffff; padding: 4px 14px; cursor: pointer; font-family: Tahoma, Arial, sans-serif; font-size: 11px; font-weight: normal;">CERRAR</button>
+                  
+                  </div>
+              </div>
           </div>
       `);
       popupWin.document.close();
@@ -64,7 +92,6 @@ const openRealPopup = (title, text) => {
 
 // Muestra un único popup al azar basado en una probabilidad (chance)
 window.showCasinoPopupRandom = (chance = 0.6) => {
-  // Genera un número entre 0 y 1. Si es menor a la probabilidad, ejecuta el código
   if (Math.random() < chance) {
     const randomMsg = casinoMessages[Math.floor(Math.random() * casinoMessages.length)];
     openRealPopup(randomMsg.title, randomMsg.text);
@@ -87,9 +114,7 @@ window.startAggressivePopups = (interval = 2000, maxPopups = 20, chance = 0.6) =
     const attemptPopup = () => {
         const currentTime = Date.now();
         
-        // Verificamos si pasó el tiempo del intervalo, si no superamos el máximo y el check de probabilidad
         if (currentTime - lastPopupTime > interval && popupShownCount < maxPopups && Math.random() < chance) {
-            // Generamos una RÁFAGA de popups simultáneos (entre 1 y 3 ventanas a la vez)
             const burstCount = Math.floor(Math.random() * 3) + 1;
             
             for (let i = 0; i < burstCount; i++) {
